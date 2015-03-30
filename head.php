@@ -9,16 +9,16 @@
     <title>Elevutveckling</title>
 
     <!-- Main javascript functions -->
-    <script type="text/javascript" src="dist/js/main.js" ></script>
+    <script type="text/javascript" src="/dist/js/main.js" ></script>
 
     <!-- Main CSS -->
-    <link href="dist/css/main.css" rel="stylesheet">
+    <link href="/dist/css/main.css" rel="stylesheet">
 
     <!-- Bootstrap core CSS -->
-    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- iHover style CSS. For hover over image effects -->
-    <link href="dist/css/ihover.css" rel="stylesheet">
+    <link href="/dist/css/ihover.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="jumbotron.css" rel="stylesheet">
