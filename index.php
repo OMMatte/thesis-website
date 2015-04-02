@@ -9,7 +9,7 @@ require("head.php");
       <div class="row">
         <script> printIHoverImage("resources/images/mathematics.jpg", "Matematik"); </script>
         <script> printIHoverImage("resources/images/physics.jpg", "Fysik"); </script>
-        <script> printIHoverImage("resources/images/Chemistry.jpg", "Kemi"); </script>
+        <script> printIHoverImage("resources/images/chemistry.jpg", "Kemi"); </script>
       </div>
 
 <?php
