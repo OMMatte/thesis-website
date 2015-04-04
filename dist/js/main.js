@@ -1,3 +1,4 @@
+// For the clickable images
 function printIHoverImage(imageUrl, title, description) {
   if (typeof description === 'undefined') { description = ''; }
    document.write('<div class="col-md-4">'
@@ -15,6 +16,7 @@ function printIHoverImage(imageUrl, title, description) {
                 +'</div>');
 }
 
+// For the "header" of the site. 
 function printJumbotronHeader(title, description) {
   if (typeof description === 'undefined') { description = ''; }
   document.write('<div class="jumbotron">'
@@ -24,3 +26,21 @@ function printJumbotronHeader(title, description) {
               +   '</div>'
               +  '</div>');
 }
+
+
+// Functions for showing/hiding content
+function hideContent(d) {
+  document.getElementById(d).style.display = "none";
+}
+
+function showContent(d) {
+  document.getElementById(d).style.display = "block";
+}
+function reverseDisplay(d) {
+  if(document.getElementById(d).style.display == "none") 
+    { 
+      document.getElementById(d).style.display = "block"; 
+    }
+  else { document.getElementById(d).style.display = "none"; }
+}
+

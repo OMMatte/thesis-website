@@ -1,6 +1,6 @@
 <?php
 echo getcwd() . "\n";
-require("head.php");
+//require("head.php");
 ?>
 <script> printJumbotronHeader("Online läxhjälp", "Välkommen till online läxhjälp. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."); </script>
 
