@@ -27,17 +27,31 @@ function printJumbotronHeader(title, description) {
               +  '</div>');
 }
 
+function questionAndAnswer(test) {
+    console.log('test');
+    //var questions = ["Saab", "Volvo", "BMW"];
+    //var answers = ["Car", "Train", "Plain"];
+
+    var para = document.createElement("a");
+    var node = document.createTextNode("This is new.");
+    para.appendChild(node);
+    var element = document.getElementById(test);
+    //this.appendChild(para);
+    element.appendChild(para);
+}
+
+
+
 
 // Functions for showing/hiding content
 function hideContent(d) {
   document.getElementById(d).style.display = "none";
 }
-
 function showContent(d) {
   document.getElementById(d).style.display = "block";
 }
 function reverseDisplay(d) {
-  if(document.getElementById(d).style.display == "none") 
+  if(document.getElementById(d).style.display == "none")
     { 
       document.getElementById(d).style.display = "block"; 
     }
