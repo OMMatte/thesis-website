@@ -27,21 +27,6 @@ function printIHoverImage(imageUrl, title, description) {
         }).append($('<h3>').append(title), $('<p>').append(description)))));
 
     return $returnHtml;
-
-    document.write(
-        '<div class="col-md-4">'
-    +       '<div class="ih-item square effect13 bottom_to_top">'
-    +           '<a href="#">'
-    +               '<div class="img">'
-    +                   '<img src="' + imageUrl + '" alt="...">'
-    +               '</div>'
-    +               '<div class="info">'
-    +                   '<h3>' + title + '</h3>'
-    +                   '<p>' + description + '</p>'
-    +               '</div>'
-    +           '</a>'
-    +       '</div>'
-    +   '</div>');
 }
 
 /**
