@@ -1,21 +1,47 @@
-// For the clickable images
+/**
+ *
+ * @param imageUrl
+ * @param title
+ * @param description
+ * @returns {void|*|jQuery}
+ */
 function printIHoverImage(imageUrl, title, description) {
     if (typeof description === 'undefined') {
         description = '';
     }
-    document.write('<div class="col-md-4">'
-    + '<div class="ih-item square effect13 bottom_to_top">'
-    + '<a href="#">'
-    + '<div class="img">'
-    + '<img src="' + imageUrl + '" alt="...">'
-    + '</div>'
-    + '<div class="info">'
-    + '<h3>' + title + '</h3>'
-    + '<p>' + description + '</p>'
-    + '</div>'
-    + '</a>'
-    + '</div>'
-    + '</div>');
+
+    var $returnHtml =
+        $('<div>', {
+            class: 'col-md-4'
+        }).append($('<div>', {
+            class: 'ih-item square effect13 bottom_to_top'
+        }).append($('<a>', {
+            href: '#'
+        }).append($('<div>', {
+            class: 'img'
+        }).append($('<img>', {
+            src: imageUrl,
+            alt: '...'
+        })), $('<div>', {
+            class: 'info'
+        }).append($('<h3>').append(title), $('<p>').append(description)))));
+
+    return $returnHtml;
+
+    document.write(
+        '<div class="col-md-4">'
+    +       '<div class="ih-item square effect13 bottom_to_top">'
+    +           '<a href="#">'
+    +               '<div class="img">'
+    +                   '<img src="' + imageUrl + '" alt="...">'
+    +               '</div>'
+    +               '<div class="info">'
+    +                   '<h3>' + title + '</h3>'
+    +                   '<p>' + description + '</p>'
+    +               '</div>'
+    +           '</a>'
+    +       '</div>'
+    +   '</div>');
 }
 
 /**

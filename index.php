@@ -15,10 +15,13 @@ include("$root/dist/php/body_top.php");
 </script>
 
 <div class="container">
-    <div class="row">
-        <script> printIHoverImage("resources/images/mathematics.jpg", "Matematik"); </script>
-        <script> printIHoverImage("resources/images/physics.jpg", "Fysik"); </script>
-        <script> printIHoverImage("resources/images/chemistry.jpg", "Kemi"); </script>
+    <div class="row" id="image_row_1">
+        <script>
+            var id = '#image_row_1';
+            $(id).append(printIHoverImage("/resources/images/mathematics.jpg", "Matematik"));
+            $(id).append(printIHoverImage("/resources/images/physics.jpg", "Fysik"));
+            $(id).append(printIHoverImage("/resources/images/chemistry.jpg", "Kemi"));
+        </script>
     </div>
 
     <?php
