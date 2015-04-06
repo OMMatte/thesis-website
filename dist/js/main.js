@@ -47,41 +47,81 @@ function reverseDisplay(d) {
     }
 }
 
+function getJson(path) {
+    $.getJSON(path, function (data) {
+        var items = [];
+        $.each(data, function (key, val) {
+            items.push("<li id='" + key + "'>" + val + "</li>");
+        });
 
-function bootstrapAccordion(containerID) {
-    var questions = ["Saab", "Volvo", "BMW"];
-    var answers = ["Car", "Train", "Plain"];
+        $("<ul/>", {
+            "class": "my-new-list",
+            html: items.join("")
+        }).appendTo("body");
+    });
+}
 
+
+/**
+ * Dynamic script for a bootstrap accordion which is a list of headings and hidden text that shows on heading click.
+ *
+ * @param jsonArray The json object containing the array of key/value pair items representing the header and the collapsed text part
+ * @returns {*|jQuery|HTMLElement} The html to show
+ */
+function bootstrapAccordion(jsonArray) {
     var accordionID = "accordion";
-    var $divAccordion = $('<div/>', { 'class': "panel-group", 'id': accordionID, 'role':"tablist", 'aria-multiselectable':"true"});
+    var $divAccordion = $('<div/>', {
+        'class': "panel-group",
+        'id': accordionID,
+        'role': "tablist",
+        'aria-multiselectable': "true"
+    });
 
-    for (i = 0, len = questions.length; i < len; i++) {
-    //Go through each question and answer
-    //  var question = questions[i];
-    //var answer = answers[i];
-        var divHeadingID = "questionAnswerHeading" + i;
-        var divCollapseID = "questionAnswerCollapse" + i;
+    for (i = 0, len = jsonArray.length; i < len; i++) {
+
+        var jsonObject = jsonArray[i];
+        var heading = Object.keys(jsonObject)[0];
+        var collapseText = jsonObject[heading];
+
+
+        //Go through each question and answer
+        //  var question = questions[i];
+        //var answer = answers[i];
+        var divHeadingID = "heading" + i;
+        var divCollapseID = "collapsedText" + i;
 
 
         // Create elements for question
-        var $divOuter = $('<div/>', { 'class': "panel panel-default" });
-        var $divInner = $('<div/>', { 'class': "panel-heading", 'role':"tab", 'id':divHeadingID });
-        var $header = $('<h4/>', { 'class': "panel-title" });
-        var $a = $('<a/>', { 'class':"collapsed", 'data-toggle': "collapse", 'data-parent':"#" + accordionID, 'href':"#" + divCollapseID, 'aria-expanded':"false", 'aria-controls':divCollapseID});
+        var $divOuter = $('<div/>', {'class': "panel panel-default"});
+        var $divInner = $('<div/>', {'class': "panel-heading", 'role': "tab", 'id': divHeadingID});
+        var $header = $('<h4/>', {'class': "panel-title"});
+        var $a = $('<a/>', {
+            'class': "collapsed",
+            'data-toggle': "collapse",
+            'data-parent': "#" + accordionID,
+            'href': "#" + divCollapseID,
+            'aria-expanded': "false",
+            'aria-controls': divCollapseID
+        });
 
         // Combine them
-        $($a).append("Nu testar jag");
+        $($a).append(heading);
         $($header).append($a);
         $($divInner).append($header);
         $($divOuter).append($divInner);
 
 
         // Create elements for answer
-        var $divAnswerOuter = $('<div/>', {'id': divCollapseID, 'class':"panel-collapse collapse", 'role':"tabpanel", 'area-labelledby':divHeadingID});
-        var $divAnswerInner = $('<div/>', {'class':"panel-body"});
+        var $divAnswerOuter = $('<div/>', {
+            'id': divCollapseID,
+            'class': "panel-collapse collapse",
+            'role': "tabpanel",
+            'area-labelledby': divHeadingID
+        });
+        var $divAnswerInner = $('<div/>', {'class': "panel-body"});
 
         // Combine them
-        $($divAnswerInner).append("Nu testar jag andra");
+        $($divAnswerInner).append(collapseText);
         $($divAnswerOuter).append($divAnswerInner);
 
         // Combine answer with question elements
@@ -89,52 +129,30 @@ function bootstrapAccordion(containerID) {
 
         // Finally add to highest div
         $($divAccordion).append($divOuter);
-
-        //containerID.appendChild(divAccordion);
     }
 
-    // Finally add everything to the given ID
-    $('#' + containerID).prepend($divAccordion);
+    return $divAccordion;
+}
+/**
+ *
+ * @param jsonPath
+ * @param callback
+ * @param jsonName
+ * @returns {*}
+ */
+function jsonFileCall(jsonPath, callback, jsonName) {
+    return $.getJSON(jsonPath).then(function (data) {
+        var returnJson;
+        if (jsonName === undefined) {
+
+            returnJson = data;
+        } else {
+            returnJson = data[jsonName];
+        }
+        callback(data);
+    });
 }
 
-function questionAndAnswer(containerID) {
-    //console.log('test');
-    var questions = ["Saab", "Volvo", "BMW"];
-    var answers = ["Car", "Train", "Plain"];
 
-    var container = document.getElementById(containerID);
-
-    for (i = 0, len = questions.length; i < len; i++) {
-        //Go through each question and answer
-        var question = questions[i];
-        var answer = answers[i];
-
-        //Create the elements for the question
-        var divQ = document.createElement("div");
-        var hrefQ = document.createElement("a");
-        var textQ = document.createTextNode(question);
-
-        //Create the elements for the answer
-        var divA = document.createElement("div");
-        var pA = document.createElement("p");
-        var textA = document.createTextNode(answer);
-
-        //Set attributes for the question and answer
-        divA.style.display = 'none';
-        divA.id = 'answer_' + i;
-        hrefQ.href = "javascript:reverseDisplay('" + divA.id + "')";
-
-        //Finally add the question and then the answer to the given container
-        hrefQ.appendChild(textQ);
-        divQ.appendChild(hrefQ);
-        container.appendChild(divQ);
-
-        pA.appendChild(textA);
-        divA.appendChild(pA);
-        container.appendChild(divA);
-    }
-
-
-}
 
 

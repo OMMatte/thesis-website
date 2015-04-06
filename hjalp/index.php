@@ -15,9 +15,11 @@ include("$root/dist/php/body_top.php");
 <div class="container" id="hjalp_container">
 
     <script>
-        $(document).ready(function(){
-            // Run the question and answer
-            bootstrapAccordion('hjalp_container');
+        $(document).ready(function () {
+            jsonFileCall("/json/hjalp.json", function (jsonData) {
+                $('#hjalp_container').prepend(bootstrapAccordion(jsonData));
+            });
+
         });
     </script>
 
@@ -28,7 +30,6 @@ include("$root/dist/php/body_top.php");
 <?php
 include("$root/dist/php/body_bottom.php");
 ?>
-
 
 
 </body>
