@@ -9,31 +9,17 @@
 <?php
 include("$root/dist/php/body_top.php");
 ?>
-<script> printJumbotronHeader("Hjälp", "Här hittar du lite kort information om hur sidan fungerar."); </script>
+<script> printJumbotronHeader("Hjälp", "Här hittar du lite information om hur sidan fungerar."); </script>
 
 
-<div class="container" id="test2">
+<div class="container" id="hjalp_container">
 
-
-    <div>
-        <a id="test" href="javascript:reverseDisplay('uniquename')">
-            Hur blir jag en lärare?
-        </a>
-    </div>
-
-    <div id="uniquename" style="display:none;">
-        <p>Det blir du såhär.</p>
-    </div>
-
-    <div>
-        <a href="javascript:reverseDisplay('uniquename2')">
-            Hur kontaktar jag en lärare?
-        </a>
-    </div>
-
-    <div id="uniquename2" style="display:none;">
-        <p>Det gör du såhär.</p>
-    </div>
+    <script>
+        $(document).ready(function(){
+            // Run the question and answer
+            bootstrapAccordion('hjalp_container');
+        });
+    </script>
 
     <?php
     include("$root/dist/php/footer.php");
@@ -42,5 +28,8 @@ include("$root/dist/php/body_top.php");
 <?php
 include("$root/dist/php/body_bottom.php");
 ?>
+
+
+
 </body>
-</html>t>
+</html>
