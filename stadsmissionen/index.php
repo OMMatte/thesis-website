@@ -9,7 +9,10 @@
 <?php
 include("$root/dist/php/body_top.php");
 ?>
-<script> printJumbotronHeader("Stadsmissionen", "Välkommen till Stadsmissionens elevutveckling. Via denna sida kan man få hjälp med sina studier för årskurs X - X. Ni kan också få information om hur vi arbetar på Stadsmissionen och hur ni kan hjälpa till."); </script>
+
+<script>
+    printTitle("stadsmissionen");
+</script>
 
 <div class="container">
     <!-- Example row of columns -->

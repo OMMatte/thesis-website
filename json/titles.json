@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Online läxhjälp",
+    "description": "Välkommen till online läxhjälp. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."
+  },
+  "rodakorset": {
+    "title": "Röda korset",
+    "description": "Välkommen till röda korsets elevutveckling. Via denna sida kan man få hjälp med sina studier för årskurs X - X. Ni kan också få information om hur vi arbetar på röda korset och hur ni kan hjälpa till."
+  },
+  "stadsmissionen": {
+    "title": "Stadsmissionen",
+    "description": "Välkommen till Stadsmissionens elevutveckling. Via denna sida kan man få hjälp med sina studier för årskurs X - X. Ni kan också få information om hur vi arbetar på Stadsmissionen och hur ni kan hjälpa till."
+  },
+  "hjalp": {
+    "title": "Hjälp",
+    "description": "Här hittar du lite information om hur sidan fungerar."
+  }
+}

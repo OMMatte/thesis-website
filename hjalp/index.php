@@ -9,17 +9,16 @@
 <?php
 include("$root/dist/php/body_top.php");
 ?>
-<script> printJumbotronHeader("Hjälp", "Här hittar du lite information om hur sidan fungerar."); </script>
 
+<script>
+    printTitle("hjalp");
+</script>
 
 <div class="container" id="hjalp_container">
 
     <script>
-        $(document).ready(function () {
-            jsonFileCall("/json/hjalp.json", function (jsonData) {
-                $('#hjalp_container').prepend(bootstrapAccordion(jsonData));
-            });
-
+        jsonFileCall("/json/hjalp.json", function (jsonData) {
+            $('#hjalp_container').prepend(bootstrapAccordion(jsonData));
         });
     </script>
 

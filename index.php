@@ -9,7 +9,10 @@
 <?php
 include("$root/dist/php/body_top.php");
 ?>
-<script> printJumbotronHeader("Online läxhjälp", "Välkommen till online läxhjälp. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."); </script>
+
+<script>
+    printTitle("home");
+</script>
 
 <div class="container">
     <div class="row">

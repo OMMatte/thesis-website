@@ -18,17 +18,30 @@ function printIHoverImage(imageUrl, title, description) {
     + '</div>');
 }
 
-// For the "header" of the site. 
+/**
+ *
+ * @param title
+ * @param description
+ * @returns {*|jQuery|HTMLElement}
+ */
 function printJumbotronHeader(title, description) {
     if (typeof description === 'undefined') {
         description = '';
     }
-    document.write('<div class="jumbotron">'
-    + '<div class="container">'
-    + '<h1>' + title + '</h1>'
-    + '<p>' + description + '</p>'
-    + '</div>'
-    + '</div>');
+
+    var $divJumbotron = $('<div/>', {'class': "jumbotron"});
+    var $divContainer = $('<div/>', {'class': "container"});
+    var $h = $('<h1/>');
+    var $p = $('<p>');
+
+    $h.append(title);
+    $p.append(description);
+
+    $divContainer.append($h);
+    $divContainer.append($p);
+    $divJumbotron.append($divContainer);
+
+    return $divJumbotron;
 }
 
 // Functions for showing/hiding content
@@ -46,21 +59,6 @@ function reverseDisplay(d) {
         document.getElementById(d).style.display = "none";
     }
 }
-
-function getJson(path) {
-    $.getJSON(path, function (data) {
-        var items = [];
-        $.each(data, function (key, val) {
-            items.push("<li id='" + key + "'>" + val + "</li>");
-        });
-
-        $("<ul/>", {
-            "class": "my-new-list",
-            html: items.join("")
-        }).appendTo("body");
-    });
-}
-
 
 /**
  * Dynamic script for a bootstrap accordion which is a list of headings and hidden text that shows on heading click.
@@ -149,7 +147,24 @@ function jsonFileCall(jsonPath, callback, jsonName) {
         } else {
             returnJson = data[jsonName];
         }
-        callback(data);
+        callback(returnJson);
+    });
+}
+
+/**
+ * Helper function for printing the title
+ * @param jsonKey The json-key to retrieve needed information from
+ */
+function printTitle(jsonKey) {
+
+    $(document).ready(function () {
+        jsonFileCall("/json/titles.json", function (jsonData) {
+            var title = jsonData["title"];
+            var description = jsonData["description"];
+            console.log(title);
+            console.log(description);
+            $('body').prepend((printJumbotronHeader(title, description)));
+        }, jsonKey);
     });
 }
 
