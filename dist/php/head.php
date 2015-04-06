@@ -7,8 +7,7 @@
 
 <title>Elevutveckling</title>
 
-<!-- Main javascript functions -->
-<script type="text/javascript" src="/dist/js/main.js"></script>
+
 
 <!-- Main CSS -->
 <link href="/dist/css/main.css" rel="stylesheet">
