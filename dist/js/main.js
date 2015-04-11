@@ -5,7 +5,7 @@
  * @param description
  * @returns {void|*|jQuery}
  */
-function printIHoverImage(imageUrl, title, description) {
+function generateIHoverImageHtml(title, description, imageUrl) {
     if (typeof description === 'undefined') {
         description = '';
     }
@@ -35,7 +35,7 @@ function printIHoverImage(imageUrl, title, description) {
  * @param description
  * @returns {*|jQuery|HTMLElement}
  */
-function printJumbotronHeader(title, description) {
+function generateJumbotronHeaderHtml(title, description) {
     if (typeof description === 'undefined') {
         description = '';
     }
@@ -77,7 +77,7 @@ function reverseDisplay(d) {
  * @param jsonArray The json object containing the array of key/value pair items representing the header and the collapsed text part
  * @returns {*|jQuery|HTMLElement} The html to show
  */
-function bootstrapAccordion(jsonArray) {
+function generateBootstrapAccordionHtml(jsonArray) {
     var accordionID = "accordion";
     var $divAccordion = $('<div/>', {
         'class': "panel-group",
@@ -143,17 +143,16 @@ function bootstrapAccordion(jsonArray) {
     return $divAccordion;
 }
 /**
- *
- * @param jsonPath
- * @param callback
- * @param jsonName
+ * Basic call for retrieving information from a json file and sending it to a function
+ * @param jsonPath The path to the json file
+ * @param callback The callback function. Must have a parameter the json data.
+ * @param jsonName Optional param. If the json file contains named elements, then only the element matching the given name.
  * @returns {*}
  */
-function jsonFileCall(jsonPath, callback, jsonName) {
+function retrieveJsonData(jsonPath, callback, jsonName) {
     return $.getJSON(jsonPath).then(function (data) {
         var returnJson;
         if (jsonName === undefined) {
-
             returnJson = data;
         } else {
             returnJson = data[jsonName];
@@ -162,23 +161,35 @@ function jsonFileCall(jsonPath, callback, jsonName) {
     });
 }
 
+//****************** HELPER FUNCTIONS ******************
+
 /**
  * Helper function for printing the title
- * @param jsonKey The json-key to retrieve needed information from
+ * @param jsonKey The json key to retrieve needed information from
  */
-function printTitle(jsonKey) {
-
-    $(document).ready(function () {
-        jsonFileCall("/json/titles.json", function (jsonData) {
-            var title = jsonData["title"];
-            var description = jsonData["description"];
-            console.log(title);
-            console.log(description);
-            $('body').prepend((printJumbotronHeader(title, description)));
-        }, jsonKey);
-    });
+function printHeaderHelper(jsonKey) {
+    retrieveJsonData("/json/titles.json", function (jsonData) {
+        var title = jsonData["title"];
+        var description = jsonData["description"];
+        $('body').prepend((generateJumbotronHeaderHtml(title, description)));
+    }, jsonKey);
 }
 
+/**
+ * Helper function to generate IHoverImage given a json key and a callback.
+ * @param jsonKey The json key to retrieve needed information from
+ * @param callback The callback to be called after retrieving json data
+ */
+function genereateIHoverImageHelper(jsonKey, callback) {
+    retrieveJsonData("/json/ihover_image.json", function (jsonData) {
+        var title = jsonData["title"];
+        var description = jsonData["description"];
+        var imageUrl = jsonData["image_url"];
+
+        callback(generateIHoverImageHtml(title, description, imageUrl));
+
+    }, jsonKey);
+}
 
 
 

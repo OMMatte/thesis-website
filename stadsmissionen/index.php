@@ -23,21 +23,37 @@ include("$root/dist/php/body_bottom.php");
 ?>
 
 <script>
-    printTitle("stadsmissionen");
+    printHeaderHelper("stadsmissionen");
 </script>
 
 <script>
     var id = '#image_row_1';
-    $(id).append(printIHoverImage("/resources/images/mathematics.jpg", "Matematik"));
-    $(id).append(printIHoverImage("/resources/images/physics.jpg", "Fysik"));
-    $(id).append(printIHoverImage("/resources/images/chemistry.jpg", "Kemi"));
-</script>
 
-<script>
-    var id = '#image_row_2';
-    $(id).append(printIHoverImage("/resources/images/stadsmissionen.jpg", "Stadsmissionen", "Gå till Stadsmissionens hemsida"));
-    $(id).append(printIHoverImage("/resources/images/manskliga_rattigheter.jpg", "Mänskliga Rättigheter"));
-    $(id).append(printIHoverImage("/resources/images/yttrandefrihet.jpg", "yttrandefrihet"));
+    genereateIHoverImageHelper("mathematics", function (htmlMath) {
+        $(id).append(htmlMath);
+    });
+
+    genereateIHoverImageHelper("physics", function (htmlPhysics) {
+        $(id).append(htmlPhysics);
+    });
+
+    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+        $(id).append(htmlChemistry);
+    });
+
+    var id2 = '#image_row_2';
+
+    genereateIHoverImageHelper("stadsmissionen", function (htmlMath) {
+        $(id2).append(htmlMath);
+    });
+
+    genereateIHoverImageHelper("human_rights", function (htmlPhysics) {
+        $(id2).append(htmlPhysics);
+    });
+
+    genereateIHoverImageHelper("freedom_of_speech", function (htmlChemistry) {
+        $(id2).append(htmlChemistry);
+    });
 </script>
 
 </body>

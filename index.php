@@ -24,15 +24,24 @@ include("$root/dist/php/body_bottom.php");
 ?>
 
 <script>
-    printTitle("home");
+    printHeaderHelper("home");
 
 </script>
 
 <script>
     var id = '#image_row_1';
-    $(id).append(printIHoverImage("/resources/images/mathematics.jpg", "Matematik"));
-    $(id).append(printIHoverImage("/resources/images/physics.jpg", "Fysik"));
-    $(id).append(printIHoverImage("/resources/images/chemistry.jpg", "Kemi"));
+
+    genereateIHoverImageHelper("mathematics", function (htmlMath) {
+        $(id).append(htmlMath);
+    });
+
+    genereateIHoverImageHelper("physics", function (htmlPhysics) {
+        $(id).append(htmlPhysics);
+    });
+
+    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+        $(id).append(htmlChemistry);
+    });
 </script>
 
 </body>

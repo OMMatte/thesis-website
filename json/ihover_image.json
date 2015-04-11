@@ -1,0 +1,37 @@
+{
+  "mathematics": {
+    "title": "Matematik",
+    "description": "",
+    "image_url": "/resources/images/mathematics.jpg"
+  },
+  "physics": {
+    "title": "Fysik",
+    "description": "",
+    "image_url": "/resources/images/physics.jpg"
+  },
+  "chemistry": {
+    "title": "Kemi",
+    "description": "",
+    "image_url": "/resources/images/chemistry.jpg"
+  },
+  "stadsmissionen": {
+    "title": "Stadsmissionen",
+    "description": "Gå till Stadsmissionens hemsida",
+    "image_url": "/resources/images/stadsmissionen.jpg"
+  },
+  "rodakorset": {
+    "title": "Röda Korset",
+    "description": "Gå till Röda Korsets hemsida",
+    "image_url": "/resources/images/roda_korset.jpg"
+  },
+  "human_rights": {
+    "title": "Mänskliga Rättigheter",
+    "description": "",
+    "image_url": "/resources/images/manskliga_rattigheter.jpg"
+  },
+  "freedom_of_speech": {
+    "title": "Yttrandefrihet",
+    "description": "",
+    "image_url": "/resources/images/yttrandefrihet.jpg"
+  }
+}

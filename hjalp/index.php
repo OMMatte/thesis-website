@@ -21,13 +21,14 @@ include("$root/dist/php/body_bottom.php");
 ?>
 
 <script>
-    printTitle("hjalp");
+    printHeaderHelper("hjalp");
 </script>
 
 <script>
-    jsonFileCall("/json/hjalp.json", function (jsonData) {
-        $('#hjalp_container').prepend(bootstrapAccordion(jsonData));
+    retrieveJsonData("/json/hjalp.json", function (jsonData) {
+        $('#hjalp_container').prepend(generateBootstrapAccordionHtml(jsonData));
     });
+
 </script>
 
 </body>
