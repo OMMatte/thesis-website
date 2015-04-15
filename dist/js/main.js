@@ -3,11 +3,15 @@
  * @param imageUrl
  * @param title
  * @param description
+ * @param href
  * @returns {void|*|jQuery}
  */
-function generateIHoverImageHtml(title, description, imageUrl) {
+function generateIHoverImageHtml(title, description, imageUrl, href) {
     if (typeof description === 'undefined') {
         description = '';
+    }
+    if (typeof href === '') {
+        href = '#';
     }
 
     var $returnHtml =
@@ -16,7 +20,7 @@ function generateIHoverImageHtml(title, description, imageUrl) {
         }).append($('<div>', {
             class: 'ih-item square effect13 bottom_to_top'
         }).append($('<a>', {
-            href: '#'
+            href: href
         }).append($('<div>', {
             class: 'img'
         }).append($('<img>', {
@@ -179,14 +183,15 @@ function printHeaderHelper(jsonKey) {
  * Helper function to generate IHoverImage given a json key and a callback.
  * @param jsonKey The json key to retrieve needed information from
  * @param callback The callback to be called after retrieving json data
+ * @param href the href that the image links do, default is #
  */
-function genereateIHoverImageHelper(jsonKey, callback) {
+function genereateIHoverImageHelper(jsonKey, callback, href) {
     retrieveJsonData("/json/ihover_image.json", function (jsonData) {
         var title = jsonData["title"];
         var description = jsonData["description"];
         var imageUrl = jsonData["image_url"];
 
-        callback(generateIHoverImageHtml(title, description, imageUrl));
+        callback(generateIHoverImageHtml(title, description, imageUrl, href));
 
     }, jsonKey);
 }

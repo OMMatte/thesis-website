@@ -33,15 +33,17 @@ include("$root/dist/php/body_bottom.php");
 
     genereateIHoverImageHelper("mathematics", function (htmlMath) {
         $(id).append(htmlMath);
-    });
 
-    genereateIHoverImageHelper("physics", function (htmlPhysics) {
-        $(id).append(htmlPhysics);
-    });
+        genereateIHoverImageHelper("physics", function (htmlPhysics) {
+            $(id).append(htmlPhysics);
 
-    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
-        $(id).append(htmlChemistry);
-    });
+            genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+                $(id).append(htmlChemistry);
+            }, "chemistry");
+
+        }, "physics");
+
+    }, "mathematics");
 </script>
 
 </body>
