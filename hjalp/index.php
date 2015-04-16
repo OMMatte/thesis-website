@@ -2,31 +2,34 @@
 <head>
     <?php
     $root = $_SERVER['DOCUMENT_ROOT'];
-    include("$root/dist/php/head.php");
+    $php_path = "/resources/php";
+    include("$root$php_path/head.php");
     ?>
 </head>
 <body>
 <?php
-include("$root/dist/php/body_top.php");
+include("$root$php_path/body_top.php");
 ?>
 
 
-<div class="container" id="hjalp_container">
+<div class="container" id="top_container">
     <?php
-    include("$root/dist/php/footer.php");
+    include("$root$php_path/footer.php");
     ?>
 </div>
 <?php
-include("$root/dist/php/body_bottom.php");
+include("$root$php_path/body_bottom.php");
 ?>
 
 <script>
-    printHeaderHelper("hjalp");
+    generateHeaderHelper("hjalp", function (html) {
+        $('#top_container').before(html);
+    });
 </script>
 
 <script>
-    retrieveJsonData("/json/hjalp.json", function (jsonData) {
-        $('#hjalp_container').prepend(generateBootstrapAccordionHtml(jsonData));
+    retrieveJsonData("hjalp.json", function (jsonData) {
+        $('#top_container').prepend(generateBootstrapAccordionHtml(jsonData));
     });
 
 </script>

@@ -14,5 +14,9 @@
   "hjalp": {
     "title": "Hjälp",
     "description": "Här hittar du lite information om hur sidan fungerar."
+  },
+  "mathematics": {
+    "title": "Matematik",
+    "description": ""
   }
 }

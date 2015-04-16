@@ -154,7 +154,9 @@ function generateBootstrapAccordionHtml(jsonArray) {
  * @returns {*}
  */
 function retrieveJsonData(jsonPath, callback, jsonName) {
-    return $.getJSON(jsonPath).then(function (data) {
+    var rootPath = "/resources/json/";
+    var fullPath = rootPath + jsonPath;
+    return $.getJSON(fullPath).then(function (data) {
         var returnJson;
         if (jsonName === undefined) {
             returnJson = data;
@@ -171,10 +173,10 @@ function retrieveJsonData(jsonPath, callback, jsonName) {
  * Helper function for printing the title
  * @param jsonKey The json key to retrieve needed information from
  */
-function printHeaderHelper(jsonKey) {
+function generateHeaderHelper(jsonKey, callback) {
     var $html = generateJumbotronHeaderHtml();
-    $('body').prepend($html);
-    retrieveJsonData("/json/titles.json", function (jsonData) {
+    callback($html);
+    retrieveJsonData("titles.json", function (jsonData) {
         var title = jsonData["title"];
         var description = jsonData["description"];
         $html.replaceWith(generateJumbotronHeaderHtml(title, description));
@@ -192,7 +194,7 @@ function genereateIHoverImageHelper(jsonKey, callback, href) {
     var $html = generateIHoverImageHtml();
     callback($html);
 
-    retrieveJsonData("/json/ihover_image.json", function (jsonData) {
+    retrieveJsonData("ihover_image.json", function (jsonData) {
         var title = jsonData["title"];
         var description = jsonData["description"];
         var imageUrl = jsonData["image_url"];

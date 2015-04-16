@@ -2,28 +2,31 @@
 <head>
     <?php
     $root = $_SERVER['DOCUMENT_ROOT'];
-    include("$root/dist/php/head.php");
+    $php_path = "/resources/php";
+    include("$root$php_path/head.php");
     ?>
 </head>
 <body>
 <?php
-include("$root/dist/php/body_top.php");
+include("$root$php_path/body_top.php");
 ?>
 
-<div class="container">
+<div class="container" id="top_container">
     <!-- Example row of columns -->
     <div class="row" id="image_row_1"></div>
     <div class="row" , id="image_row_2"></div>
     <?php
-    include("$root/dist/php/footer.php");
+    include("$root$php_path/footer.php");
     ?>
 </div>
 <?php
-include("$root/dist/php/body_bottom.php");
+include("$root$php_path/body_bottom.php");
 ?>
 
 <script>
-    printHeaderHelper("rodakorset");
+    generateHeaderHelper("rodakorset", function (html) {
+        $('#top_container').before(html);
+    });
 </script>
 
 <script>
