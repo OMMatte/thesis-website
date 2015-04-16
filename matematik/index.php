@@ -1,23 +1,20 @@
 <html lang="en">
 <head>
     <?php
-    $root = $_SERVER['DOCUMENT_ROOT'];
-    $php_path = "/resources/php";
-    include("$root$php_path/head.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
+    include($full_php_path . "head.php");
     ?>
 </head>
 <body>
 <?php
-include("$root$php_path/body_top.php");
+include($full_php_path . "body_top.php");
 ?>
 
 <div class="container">
 
     <div class="row row-offcanvas row-offcanvas-right">
 
-
         <div class="col-xs-12 col-sm-9">
-
 
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -50,11 +47,12 @@ include("$root$php_path/body_top.php");
     <!--/.sidebar-offcanvas-->
 
     <?php
-    include("$root$php_path/footer.php");
+    include($full_php_path . "footer.php");
     ?>
 </div>
 <?php
-include("$root$php_path/body_bottom.php");
+include($full_php_path . "body_bottom.php");
+include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>

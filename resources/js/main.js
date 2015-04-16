@@ -154,9 +154,7 @@ function generateBootstrapAccordionHtml(jsonArray) {
  * @returns {*}
  */
 function retrieveJsonData(jsonPath, callback, jsonName) {
-    var rootPath = "/resources/json/";
-    var fullPath = rootPath + jsonPath;
-    return $.getJSON(fullPath).then(function (data) {
+    return $.getJSON(jsonPath).then(function (data) {
         var returnJson;
         if (jsonName === undefined) {
             returnJson = data;
@@ -176,7 +174,7 @@ function retrieveJsonData(jsonPath, callback, jsonName) {
 function generateHeaderHelper(jsonKey, callback) {
     var $html = generateJumbotronHeaderHtml();
     callback($html);
-    retrieveJsonData("titles.json", function (jsonData) {
+    retrieveJsonData(elevutveckling.paths.json + "titles.json", function (jsonData) {
         var title = jsonData["title"];
         var description = jsonData["description"];
         $html.replaceWith(generateJumbotronHeaderHtml(title, description));
@@ -194,13 +192,18 @@ function genereateIHoverImageHelper(jsonKey, callback, href) {
     var $html = generateIHoverImageHtml();
     callback($html);
 
-    retrieveJsonData("ihover_image.json", function (jsonData) {
+    retrieveJsonData(elevutveckling.paths.json + "ihover_image.json", function (jsonData) {
         var title = jsonData["title"];
         var description = jsonData["description"];
-        var imageUrl = jsonData["image_url"];
+        var imageUrl = elevutveckling.paths.images + jsonData["image_name"];
 
         $html.replaceWith(generateIHoverImageHtml(title, description, imageUrl, href));
     }, jsonKey);
 }
 
-
+function extendNamespace(callback) {
+    (function (elevutveckling, $, undefined) {
+        //Private Property
+        callback(elevutveckling, $, undefined);
+    }(window.elevutveckling = window.elevutveckling || {}, jQuery));
+}

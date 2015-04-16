@@ -1,17 +1,19 @@
 <html lang="en">
 <head>
     <?php
-    $root = $_SERVER['DOCUMENT_ROOT'];
-    $php_path = "/resources/php";
-    include("$root$php_path/head.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
+    include($full_php_path . "head.php");
     ?>
 </head>
+
 <body>
 <?php
-include("$root$php_path/body_top.php");
+include($full_php_path . "body_top.php");
 ?>
+<script>
 
 
+</script>
 
 <div class="container" id="top_container">
     <div class="row" id="image_row_1">
@@ -19,16 +21,17 @@ include("$root$php_path/body_top.php");
     </div>
 
     <?php
-    include("$root$php_path/footer.php");
+    include($full_php_path . "footer.php");
     ?>
 </div>
 <?php
-include("$root$php_path/body_bottom.php");
+include($full_php_path . "body_bottom.php");
+include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
     generateHeaderHelper("home", function (html) {
-       $('#top_container').before(html);
+        $('#top_container').before(html);
     });
 </script>
 
