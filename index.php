@@ -31,19 +31,18 @@ include("$root/dist/php/body_bottom.php");
 <script>
     var id = '#image_row_1';
 
+
     genereateIHoverImageHelper("mathematics", function (htmlMath) {
         $(id).append(htmlMath);
+    }, "/matematik");
 
-        genereateIHoverImageHelper("physics", function (htmlPhysics) {
-            $(id).append(htmlPhysics);
+    genereateIHoverImageHelper("physics", function (htmlPhysics) {
+        $(id).append(htmlPhysics);
+    }, "/fysik");
 
-            genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
-                $(id).append(htmlChemistry);
-            }, "chemistry");
-
-        }, "physics");
-
-    }, "mathematics");
+    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+        $(id).append(htmlChemistry);
+    }, "/kemi");
 </script>
 
 </body>
