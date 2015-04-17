@@ -148,7 +148,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
         }
 
         return $divAccordion;
-    }
+    };
     /**
      * Basic call for retrieving information from a json file and sending it to a function
      * @param jsonPath The path to the json file
@@ -160,13 +160,15 @@ extendNamespace(function (elevutveckling, $, undefined) {
         return $.getJSON(jsonPath).then(function (data) {
             var returnJson;
             if (jsonName === undefined) {
+                console.log("test");
                 returnJson = data;
+                console.log(data);
             } else {
                 returnJson = data[jsonName];
             }
             callback(returnJson);
         });
-    }
+    };
 
 //****************** HELPER FUNCTIONS ******************
 
@@ -182,7 +184,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             var description = jsonData["description"];
             $html.replaceWith(generateJumbotronHeaderHtml(title, description));
         }, jsonKey);
-    }
+    };
 
     /**
      * Helper function to generate IHoverImage given a json key and a callback.
@@ -202,5 +204,55 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
             $html.replaceWith(generateIHoverImageHtml(title, description, imageUrl, href));
         }, jsonKey);
+    };
+
+    elevutveckling.generateHeadingPanel = function (title, bodyHtml) {
+        if (typeof bodyHtml === 'undefined') {
+            bodyHtml = '';
+        }
+        var html =
+            "<div class=\"panel panel-default\"> " +
+            "<div class=\"panel-heading\">" +
+            "<h3 class=\"panel-title\">" + title + "</h3>" +
+            "</div>" +
+            "<div class=\"panel-body\">" +
+            bodyHtml +
+            "</div>" +
+            "</div>";
+
+        return $(html);
+    };
+
+    elevutveckling.generateListGroup = function (title, bodyHtml) {
+
+        var html =
+            "<div class=\"list-group\">" +
+            "<a class=\"list-group-item active\">" + title + "</a>" +
+                //   <!--<a href="#" class="list-group-item">Link</a>
+                //   <a href="#" class="list-group-item">Link</a> -->
+            "</div>";
+
+        return $(html)
+    };
+
+
+    elevutveckling.generateSubjectBody = function (callback) {
+        var $outerSkeleton = $("<div class=\"row row-offcanvas row-offcanvas-right\">");
+
+        callback($outerSkeleton);
+
+        elevutveckling.retrieveJsonData(elevutveckling.paths.json + "subjects.json", function (jsonData) {
+            var $innerSkeleton = $("<div class=\"col-xs-12 col-sm-9\">");
+            var $innerSkeletonLinks = $("<div class=\"col-xs-6 col-sm-3 sidebar-offcanvas\" id=\"sidebar\">");
+            var linkTitle = jsonData.links.title;
+            var questionTitle = jsonData.question_and_answers.title;
+            var roomsTitle = jsonData.virtual_rooms.title;
+
+            $innerSkeleton.append(elevutveckling.generateHeadingPanel(roomsTitle));
+            $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle));
+
+            $outerSkeleton.append($innerSkeleton);
+            $outerSkeleton.append($innerSkeletonLinks.append(elevutveckling.generateListGroup(linkTitle)));
+        })
     }
 });

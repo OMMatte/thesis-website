@@ -7,7 +7,23 @@
 </head>
 <body>
 <?php
-include($full_php_path . "subjects_body.php");
+include($full_php_path . "body_top.php");
 ?>
+<div class="container" id="top_container">
+
+    <?php
+    include($full_php_path . "footer.php");
+    ?>
+</div>
+<?php
+include($full_php_path . "body_bottom.php");
+include($full_php_path . "global_variables_js.php");
+?>
+
+<script>
+    elevutveckling.generateSubjectBody(function ($html) {
+        $("#top_container").prepend($html);
+    });
+</script>
 </body>
 </html>
