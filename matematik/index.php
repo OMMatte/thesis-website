@@ -21,7 +21,7 @@ include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    elevutveckling.generateSubjectBody(function ($html) {
+    elevutveckling.generateSubjectBody("mathematics", function ($html) {
         $("#top_container").prepend($html);
     });
 </script>
