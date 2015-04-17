@@ -1,0 +1,9 @@
+/*.thumbnail {
+    border: none;
+    box-shadow: none;
+}*/
+
+.thumbnail img {
+    min-height: 50px;
+    max-height: 150px
+}

@@ -204,21 +204,22 @@ extendNamespace(function (elevutveckling, $, undefined) {
             }, jsonKey);
         };
 
-        elevutveckling.generateHeadingPanel = function (title, bodyHtml) {
+        elevutveckling.generateHeadingPanel = function (title, $bodyHtml) {
             if (typeof bodyHtml === 'undefined') {
                 bodyHtml = '';
             }
-            var html =
+            var $html =$(
                 "<div class=\"panel panel-default\"> " +
                 "<div class=\"panel-heading\">" +
                 "<h3 class=\"panel-title\">" + title + "</h3>" +
                 "</div>" +
                 "<div class=\"panel-body\">" +
-                bodyHtml +
                 "</div>" +
-                "</div>";
+                "</div>");
 
-            return $(html);
+            $html.find('.panel-body').append($bodyHtml);
+
+            return $html;
         };
 
         elevutveckling.generateListGroup = function (title, itemList) {
@@ -232,6 +233,27 @@ extendNamespace(function (elevutveckling, $, undefined) {
             html += "</div>";
 
             return $(html)
+        };
+
+        function generateRooms(jsonKey, callback) {
+            elevutveckling.retrieveJsonData(elevutveckling.paths.json + "rooms.json", function (jsonData) {
+                var $roomHtml = $("<div class=\"row\">");
+                var roomList = jsonData[jsonKey];
+                roomList.forEach(function (room) {
+                    var name = room.name;
+                    $roomHtml.append($("<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">" +
+                    "<a href=\"www.google.com\" class=\"thumbnail\">" +
+                    "<img src=\"/resources/images/mathematics_room.png\" alt=\"120x120\">" +
+
+                    "<div class=\"caption\">" +
+                    "<p class=\"text-center\"><strong>"+ name + "</strong></p>" +
+                   // "<hr>" +
+                    "</div>" +
+                    "</a>" +
+                    "</div>"));
+                });
+                callback($roomHtml);
+            });
         };
 
 
@@ -257,9 +279,12 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var questionTitle = jsonData.question_and_answers.title;
                 var roomsTitle = jsonData.virtual_rooms.title;
 
-                $innerSkeleton.append(elevutveckling.generateHeadingPanel(roomsTitle));
-                $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle));
+                $innerSkeleton.prepend(elevutveckling.generateHeadingPanel(questionTitle));
 
+                generateRooms(subject, function ($rooms) {
+                    console.log($rooms);
+                    $innerSkeleton.append(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
+                });
 
                 elevutveckling.retrieveJsonData(elevutveckling.paths.json + "links.json", function (jsonData) {
                     var linkList = jsonData["mathematics"];
@@ -273,7 +298,8 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     fullCallbackA($outerSkeleton);
                 }
             });
-        }
+        };
+
+
     }
-)
-;
+);
