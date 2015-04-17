@@ -30,23 +30,24 @@ include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    generateHeaderHelper("home", function (html) {
+    elevutveckling.generateHeaderHelper("home", function (html) {
         $('#top_container').before(html);
     });
 </script>
 
 <script>
+
     var id = '#image_row_1';
 
-    genereateIHoverImageHelper("mathematics", function (htmlMath) {
+    elevutveckling.genereateIHoverImageHelper("mathematics", function (htmlMath) {
         $(id).append(htmlMath);
     }, "/matematik");
 
-    genereateIHoverImageHelper("physics", function (htmlPhysics) {
+    elevutveckling.genereateIHoverImageHelper("physics", function (htmlPhysics) {
         $(id).append(htmlPhysics);
     }, "/fysik");
 
-    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+    elevutveckling.genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
         $(id).append(htmlChemistry);
     }, "/kemi");
 </script>

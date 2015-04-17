@@ -1,13 +1,14 @@
 <!-- Main javascript functions -->
-<script type="text/javascript" src="/resources/js/main.js"></script>
+<script type="text/javascript" src="<?php echo $js_path ?>main.js"></script>
+<script type="text/javascript" src="<?php echo $js_path ?>elevutveckling.js"></script>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="/dist/js/bootstrap.min.js"></script>
+<script src="<?php echo $framework_js_path ?>bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="/dist/js/ie10-viewport-bug-workaround.js"></script>
+<script src="<?php echo $framework_js_path ?>ie10-viewport-bug-workaround.js"></script>
 
 
 <script id="hiddenlpsubmitdiv" style="display: none;"></script>

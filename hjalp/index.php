@@ -22,14 +22,14 @@ include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    generateHeaderHelper("hjalp", function (html) {
+    elevutveckling.generateHeaderHelper("hjalp", function (html) {
         $('#top_container').before(html);
     });
 </script>
 
 <script>
-    retrieveJsonData(elevutveckling.paths.json + "hjalp.json", function (jsonData) {
-        $('#top_container').prepend(generateBootstrapAccordionHtml(jsonData));
+    elevutveckling.retrieveJsonData(elevutveckling.paths.json + "hjalp.json", function (jsonData) {
+        $('#top_container').prepend(elevutveckling.generateBootstrapAccordionHtml(jsonData));
     });
 
 </script>

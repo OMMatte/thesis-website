@@ -1,0 +1,32 @@
+{
+  "mathematics": [
+    {
+      "name": "Wolfram Alpha",
+      "href": "https://www.wolframalpha.com/"
+    },
+    {
+      "name": "Khan Academy",
+      "href": "https://www.khanacademy.org/"
+    }
+  ],
+  "physics": [
+    {
+      "name": "Wolfram Alpha",
+      "href": "https://www.wolframalpha.com/"
+    },
+    {
+      "name": "Khan Academy Physics",
+      "href": "https://www.khanacademy.org/science/physics"
+    }
+  ],
+  "chemistry": [
+    {
+      "name": "Wolfram Alpha",
+      "href": "https://www.wolframalpha.com/"
+    },
+    {
+      "name": "Khan Academy Chemistry",
+      "href": "https://www.khanacademy.org/science/chemistry"
+    }
+  ]
+}

@@ -24,7 +24,7 @@ include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    generateHeaderHelper("rodakorset", function (html) {
+    elevutveckling.generateHeaderHelper("rodakorset", function (html) {
         $('#top_container').before(html);
     });
 </script>
@@ -32,29 +32,29 @@ include($full_php_path . "global_variables_js.php");
 <script>
     var id = '#image_row_1';
 
-    genereateIHoverImageHelper("mathematics", function (htmlMath) {
+    elevutveckling.genereateIHoverImageHelper("mathematics", function (htmlMath) {
         $(id).append(htmlMath);
     });
 
-    genereateIHoverImageHelper("physics", function (htmlPhysics) {
+    elevutveckling.genereateIHoverImageHelper("physics", function (htmlPhysics) {
         $(id).append(htmlPhysics);
     });
 
-    genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
+    elevutveckling.genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
         $(id).append(htmlChemistry);
     });
 
     var id2 = '#image_row_2';
 
-    genereateIHoverImageHelper("rodakorset", function (htmlMath) {
+    elevutveckling.genereateIHoverImageHelper("rodakorset", function (htmlMath) {
         $(id2).append(htmlMath);
     });
 
-    genereateIHoverImageHelper("human_rights", function (htmlPhysics) {
+    elevutveckling.genereateIHoverImageHelper("human_rights", function (htmlPhysics) {
         $(id2).append(htmlPhysics);
     });
 
-    genereateIHoverImageHelper("freedom_of_speech", function (htmlChemistry) {
+    elevutveckling.genereateIHoverImageHelper("freedom_of_speech", function (htmlChemistry) {
         $(id2).append(htmlChemistry);
     });
 </script>
