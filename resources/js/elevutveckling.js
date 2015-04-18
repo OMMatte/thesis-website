@@ -208,7 +208,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             if (typeof bodyHtml === 'undefined') {
                 bodyHtml = '';
             }
-            var $html =$(
+            var $html = $(
                 "<div class=\"panel panel-default\"> " +
                 "<div class=\"panel-heading\">" +
                 "<h3 class=\"panel-title\">" + title + "</h3>" +
@@ -235,26 +235,39 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return $(html)
         };
 
+        function roomClickEvent(roomName) {
+            var id = "groupworld_frame";
+            $("#" + id).remove();
+            var $roomFrame = $("<iframe width=\"100%\" height=\"1000\" scrolling=\"no\" frameborder=\"0\" src=\"http://www.groupworld.net/mp/parse.cgi?filename=mathjs&inst_id=1434&instance=" + $.trim(roomName) + "&width=100%&height=100%&iframe=true\"></iframe>");
+
+            var $headingWithFrame = elevutveckling.generateHeadingPanel(roomName, $roomFrame);
+            $headingWithFrame.attr("id", id);
+            $("#top_container").prepend($headingWithFrame);
+        }
+
         function generateRooms(jsonKey, callback) {
             elevutveckling.retrieveJsonData(elevutveckling.paths.json + "rooms.json", function (jsonData) {
                 var $roomHtml = $("<div class=\"row\">");
-                var roomList = jsonData[jsonKey];
+                var roomList = jsonData[jsonKey].rooms;
+                var image_name = jsonData[jsonKey].image_name;
                 roomList.forEach(function (room) {
                     var name = room.name;
                     $roomHtml.append($("<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">" +
-                    "<a href=\"www.google.com\" class=\"thumbnail\">" +
-                    "<img src=\"/resources/images/mathematics_room.png\" alt=\"120x120\">" +
+                    "<a href=\"#\" class=\"thumbnail\">" +
+                    "<img src=\"" + elevutveckling.paths.images + image_name + "\" alt=\"120x120\">" +
 
                     "<div class=\"caption\">" +
-                    "<p class=\"text-center\"><strong>"+ name + "</strong></p>" +
-                   // "<hr>" +
+                    "<p class=\"text-center\"><strong>" + name + "</strong></p>" +
+                        // "<hr>" +
                     "</div>" +
                     "</a>" +
-                    "</div>"));
+                    "</div>").click(function () {
+                        roomClickEvent(name);
+                    }));
                 });
                 callback($roomHtml);
             });
-        };
+        }
 
 
         /**
@@ -299,7 +312,5 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 }
             });
         };
-
-
     }
 );
