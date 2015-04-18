@@ -1,4 +1,4 @@
 <hr>
 <footer>
-    <p>© Company 2014</p>
+    <p>© Company 2015</p>
 </footer>
