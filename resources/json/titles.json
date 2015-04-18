@@ -1,7 +1,7 @@
 {
   "home": {
-    "title": "Online läxhjälp",
-    "description": "Välkommen till online läxhjälp. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."
+    "title": "Elevutveckling",
+    "description": "Välkommen till Elevutveckling. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."
   },
   "rodakorset": {
     "title": "Röda korset",
@@ -17,6 +17,14 @@
   },
   "mathematics": {
     "title": "Matematik",
+    "description": ""
+  },
+  "chemistry": {
+    "title": "Kemi",
+    "description": ""
+  },
+  "physics": {
+    "title": "Fysik",
     "description": ""
   }
 }
