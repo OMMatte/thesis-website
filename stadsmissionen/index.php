@@ -34,29 +34,29 @@ include($full_php_path . "global_variables_js.php");
 
     elevutveckling.genereateIHoverImageHelper("mathematics", function (htmlMath) {
         $(id).append(htmlMath);
-    });
+    }, "/matematik");
 
     elevutveckling.genereateIHoverImageHelper("physics", function (htmlPhysics) {
         $(id).append(htmlPhysics);
-    });
+    }, "/physics");
 
     elevutveckling.genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
         $(id).append(htmlChemistry);
-    });
+    }, "/chemistry");
 
     var id2 = '#image_row_2';
 
-    elevutveckling.genereateIHoverImageHelper("stadsmissionen", function (htmlMath) {
-        $(id2).append(htmlMath);
-    });
+    elevutveckling.genereateIHoverImageHelper("stadsmissionen", function (html) {
+        $(id2).append(html);
+    }, "http://www.stadsmissionen.se/");
 
-    elevutveckling.genereateIHoverImageHelper("human_rights", function (htmlPhysics) {
-        $(id2).append(htmlPhysics);
-    });
+    elevutveckling.genereateIHoverImageHelper("human_rights", function (html) {
+        $(id2).append(html);
+    }, "http://www.manskligarattigheter.se/");
 
-    elevutveckling.genereateIHoverImageHelper("freedom_of_speech", function (htmlChemistry) {
-        $(id2).append(htmlChemistry);
-    });
+    elevutveckling.genereateIHoverImageHelper("freedom_of_speech", function (html) {
+        $(id2).append(html);
+    }, "http://www.riksdagen.se/sv/Sa-funkar-riksdagen/Demokrati/Grundlagarna/Yttrandefrihetsgrundlag/");
 </script>
 
 </body>
