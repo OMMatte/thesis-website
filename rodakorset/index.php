@@ -5,7 +5,7 @@
     include($full_php_path . "head.php");
     ?>
 </head>
-<body>
+<body id="body_home">
 <?php
 include($full_php_path . "body_top.php");
 ?>
@@ -13,7 +13,7 @@ include($full_php_path . "body_top.php");
 <div class="container" id="top_container">
     <!-- Example row of columns -->
     <div class="row" id="image_row_1"></div>
-    <div class="row" , id="image_row_2"></div>
+    <div class="row" id="image_row_2"></div>
     <?php
     include($full_php_path . "footer.php");
     ?>
