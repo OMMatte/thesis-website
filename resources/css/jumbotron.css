@@ -3,3 +3,10 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
+
+.jumbotron h1 {
+    font-size: 45px;
+}
+.jumbotron {
+    padding: 0.5em 0.6em;
+}
