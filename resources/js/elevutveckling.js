@@ -292,13 +292,16 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var questionTitle = jsonData.question_and_answers.title;
                 var roomsTitle = jsonData.virtual_rooms.title;
 
-                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\" http://" + location.hostname + elevutveckling.paths.qa + subject.sv + "\">");
-                $innerSkeleton.prepend(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
+                // Variable in order to make rooms appear before qa
+                var $panelRoom = elevutveckling.generateHeadingPanel(roomsTitle);
+                $innerSkeleton.append($panelRoom);
 
                 generateRooms(subject.eng, function ($rooms) {
-                    console.log($rooms);
-                    $innerSkeleton.append(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
+                    $panelRoom.replaceWith(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
                 });
+
+                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\" http://" + location.hostname + elevutveckling.paths.qa + subject.sv + "\">");
+                $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
 
                 elevutveckling.retrieveJsonData(elevutveckling.paths.json + "links.json", function (jsonData) {
                     var linkList = jsonData["mathematics"];
