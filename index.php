@@ -6,14 +6,10 @@
     ?>
 </head>
 
-<body>
+<body id="body_home">
 <?php
 include($full_php_path . "body_top.php");
 ?>
-<script>
-
-
-</script>
 
 <div class="container" id="top_container">
     <div class="row" id="image_row_1">
@@ -26,7 +22,6 @@ include($full_php_path . "body_top.php");
 </div>
 <?php
 include($full_php_path . "body_bottom.php");
-include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>

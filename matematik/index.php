@@ -12,25 +12,22 @@ include($full_php_path . "body_top.php");
 
 <div class="container" id="top_container">
 
-
-
     <?php
     include($full_php_path . "footer.php");
     ?>
 </div>
 <?php
 include($full_php_path . "body_bottom.php");
-include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    elevutveckling.generateHeaderHelper("mathematics", function (html) {
+    elevutveckling.generateHeaderHelper(elevutveckling.subjects.math.eng, function (html) {
         $('#top_container').before(html);
     });
 </script>
 
 <script>
-    elevutveckling.generateSubjectBody("mathematics", function ($html) {
+    elevutveckling.generateSubjectBody(elevutveckling.subjects.math, function ($html) {
         $("#top_container").prepend($html);
     });
 </script>

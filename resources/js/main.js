@@ -7,3 +7,9 @@ function extendNamespace(callback, namespaceName) {
         callback(namespaceName, $, undefined);
     }(window[namespaceName] = window[namespaceName] || {}, jQuery));
 }
+
+function alertHtmlSize(pixels) {
+    //console.log(pixels);
+    pixels += -30;
+    document.getElementById('iframe_q2a').style.height = pixels + "px";
+}

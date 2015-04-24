@@ -5,7 +5,7 @@
     include($full_php_path . "head.php");
     ?>
 </head>
-<body>
+<body id="body_stadsmissionen">
 <?php
 include($full_php_path . "body_top.php");
 ?>
@@ -20,7 +20,6 @@ include($full_php_path . "body_top.php");
 </div>
 <?php
 include($full_php_path . "body_bottom.php");
-include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>

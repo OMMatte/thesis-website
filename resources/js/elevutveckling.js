@@ -292,9 +292,10 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var questionTitle = jsonData.question_and_answers.title;
                 var roomsTitle = jsonData.virtual_rooms.title;
 
-                $innerSkeleton.prepend(elevutveckling.generateHeadingPanel(questionTitle));
+                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\" http://" + location.hostname + elevutveckling.paths.qa + subject.sv + "\">");
+                $innerSkeleton.prepend(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
 
-                generateRooms(subject, function ($rooms) {
+                generateRooms(subject.eng, function ($rooms) {
                     console.log($rooms);
                     $innerSkeleton.append(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
                 });
@@ -304,7 +305,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     $innerSkeletonLinks.append(elevutveckling.generateListGroup(linkTitle, linkList));
                 });
             });
-
 
             $(document).ajaxStop(function () {
                 if (typeof fullCallbackA != 'undefined') {

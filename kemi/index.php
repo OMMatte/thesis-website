@@ -5,14 +5,12 @@
     include($full_php_path . "head.php");
     ?>
 </head>
-<body id="body_mathematics">
+<body id="body_chemistry">
 <?php
 include($full_php_path . "body_top.php");
 ?>
 
 <div class="container" id="top_container">
-
-
 
     <?php
     include($full_php_path . "footer.php");
@@ -20,17 +18,16 @@ include($full_php_path . "body_top.php");
 </div>
 <?php
 include($full_php_path . "body_bottom.php");
-include($full_php_path . "global_variables_js.php");
 ?>
 
 <script>
-    elevutveckling.generateHeaderHelper("chemistry", function (html) {
+    elevutveckling.generateHeaderHelper(elevutveckling.subjects.chem.eng, function (html) {
         $('#top_container').before(html);
     });
 </script>
 
 <script>
-    elevutveckling.generateSubjectBody("chemistry", function ($html) {
+    elevutveckling.generateSubjectBody(elevutveckling.subjects.chem, function ($html) {
         $("#top_container").prepend($html);
     });
 </script>
