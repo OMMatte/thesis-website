@@ -8,33 +8,26 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../">Elevutveckling</a>
+            <a class="navbar-brand" href="/">Elevutveckling</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Om</a></li>
-                    <li><a href="../hjalp/">Hjälp</a></li>
-                    <li><a href="#">Kontakt</a></li>
-                    <!--<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ämnen <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+                            <li><a href="/matematik">Matematik</a></li>
+                            <li><a href="/fysik">Fysik</a></li>
+                            <li><a href="/kemi">Kemi</a></li>
                         </ul>
                     </li>
-                    -->
+                    <li><a href="../hjalp/">Hjälp</a></li>
+                    <li><a href="#">Om</a></li>
+                    <li><a href="#">Kontakt</a></li>
                 </ul>
             </div>
-
-
             <!--
                         <form class="navbar-form navbar-right">
                             <div class="form-group">

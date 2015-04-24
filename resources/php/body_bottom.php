@@ -1,6 +1,7 @@
 <!-- Main javascript functions -->
 <script type="text/javascript" src="<?php echo $js_path ?>main.js"></script>
 <script type="text/javascript" src="<?php echo $js_path ?>elevutveckling.js"></script>
+<script type="text/javascript" src="<?php echo $js_path ?>header.js"></script>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -41,3 +42,13 @@
     } catch (e) {
     }
 </script>
+
+
+<script>
+    // Effects for the navigation bar
+    elevutveckling.header.navbarEffects();
+</script>
+
+<?php
+include($root_path . "/global_variables_js.php");
+?>
