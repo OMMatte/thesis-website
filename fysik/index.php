@@ -9,6 +9,7 @@
 <body id="body_physics">
 <?php
 include($full_php_path . "body_top.php");
+include($full_php_path . "login/login.php");
 ?>
 
 <div class="container" id="top_container">

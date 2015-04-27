@@ -270,13 +270,13 @@ extendNamespace(function (elevutveckling, $, undefined) {
         }
 
 
-        /**
+        /**llbac
          *
          * @param subject
          * @param posCallback Callback ONLY for synchronous positioning of the generated HTML
          * @param fullCallbackA Callback for the full HTML after the async requests are finished, use this for editing the response
          */
-        elevutveckling.generateSubjectBody = function (subject, posCallback, fullCallbackA) {
+        elevutveckling.generateSubjectBody = function (subject, posCallback, fullCakA) {
             var $outerSkeleton = $("<div class=\"row row-offcanvas row-offcanvas-right\">");
             var $innerSkeleton = $("<div class=\"col-xs-12 col-sm-9\">");
             var $innerSkeletonLinks = $("<div class=\"col-xs-6 col-sm-3 sidebar-offcanvas\" id=\"sidebar\">");
@@ -300,7 +300,9 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     $panelRoom.replaceWith(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
                 });
 
-                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\" http://" + location.hostname + elevutveckling.paths.qa + subject.sv + "\">");
+                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\"http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv + "\">");
+                //var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\"http://" + location.hostname + "/" + "qa/matematik" + "\">");
+
                 $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
 
                 elevutveckling.retrieveJsonData(elevutveckling.paths.json + "links.json", function (jsonData) {

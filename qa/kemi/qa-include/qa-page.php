@@ -818,6 +818,7 @@
 
 	$qa_content = qa_get_request_content();
 
+
 	if (is_array($qa_content)) {
 		if (QA_DEBUG_PERFORMANCE)
 			$qa_usage->mark('view');

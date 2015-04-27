@@ -1,7 +1,7 @@
 DirectoryIndex index.php
 <IfModule mod_rewrite.c>
 RewriteEngine On
-#RewriteBase /
+#RewriteBase /qa/kemi
 RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
 RewriteRule . %1/%2 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -22,6 +22,8 @@
 <!-- Main CSS -->
 <link href="<?php echo $css_path ?>main.css" rel="stylesheet">
 
+<link href="<?php echo $css_path ?>login.css" rel="stylesheet">
+
 <!-- Custom styles for this bootstrap template -->
 <link href="<?php echo $css_path ?>jumbotron.css" rel="stylesheet">
 

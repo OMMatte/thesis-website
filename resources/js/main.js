@@ -11,5 +11,5 @@ function extendNamespace(callback, namespaceName) {
 function alertHtmlSize(pixels) {
     //console.log(pixels);
     pixels += -30;
-    document.getElementById('iframe_q2a').style.height = pixels + "px";
+    document.getElementById('iframe_q2a').style.height = Math.max(pixels, 400) + "px";
 }

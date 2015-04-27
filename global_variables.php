@@ -8,7 +8,8 @@ $css_path = $files_dir . "css/";
 $js_path = $files_dir . "js/";
 $json_path = $files_dir . "json/";
 $image_path = $files_dir . "images/";
-$qa_path = "/qa/";
+$qa_path = "qa/";
+$qa_shared_path = $qa_path . "shared-files";
 
 $full_php_path = $root_path . $php_path;
 $full_qa_path = $root_path . $qa_path;
@@ -23,3 +24,5 @@ $subjects = array
     'phys' => array('physics', "fysik"),
     'chem' => array('chemistry', "kemi")
 );
+
+$query_string_qa_conf = "conf_filename";

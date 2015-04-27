@@ -31,10 +31,13 @@
 	prepend the hostname with 'p:'.
 */
 
-	define('QA_MYSQL_HOSTNAME', '127.0.0.1');
+require $_SERVER['DOCUMENT_ROOT'] . '/global_variables.php';
+
+
+    define('QA_MYSQL_HOSTNAME', '127.0.0.1');
     define('QA_MYSQL_USERNAME', 'awzctixl_ommatte');
     define('QA_MYSQL_PASSWORD', '123A654B789C');
-    define('QA_MYSQL_DATABASE', 'awzctixl_elevutveckling');
+    define('QA_MYSQL_DATABASE', 'awzctixl_localhost');
 
 /*
 	Ultra-concise installation instructions:
@@ -58,7 +61,8 @@
 	MySQL database, or to include the Question2Answer tables in an existing MySQL database.
 */
 
-	define('QA_MYSQL_TABLE_PREFIX', 'phys_');
+define('QA_MYSQL_TABLE_PREFIX', 'phys_');
+
 
 /*
 	If you wish, you can define QA_MYSQL_USERS_PREFIX separately from QA_MYSQL_TABLE_PREFIX.
