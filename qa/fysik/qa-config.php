@@ -31,13 +31,16 @@
 	prepend the hostname with 'p:'.
 */
 
-require $_SERVER['DOCUMENT_ROOT'] . '/global_variables.php';
-
-
     define('QA_MYSQL_HOSTNAME', '127.0.0.1');
     define('QA_MYSQL_USERNAME', 'awzctixl_ommatte');
     define('QA_MYSQL_PASSWORD', '123A654B789C');
+
+
+if (gethostname() == 'mathiass-air') {
     define('QA_MYSQL_DATABASE', 'awzctixl_localhost');
+} else {
+    define('QA_MYSQL_DATABASE', 'awzctixl_elevutveckling');
+}
 
 /*
 	Ultra-concise installation instructions:
