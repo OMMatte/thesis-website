@@ -58,7 +58,8 @@ require_once DONUT_THEME_BASE_DIR . '/utils/qa-donut-utils.php';
 require_once DONUT_THEME_BASE_DIR . '/utils/donut-options.php';
 require_once DONUT_THEME_BASE_DIR . '/qa-donut-layer.php';
 
+
 /**
  * Custom files
  */
-require_once $_SERVER['DOCUMENT_ROOT'] . '/qa/custom-files/qa-custom-donut-layer.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/qa/custom-files/custom-qa-donut-layer.php';

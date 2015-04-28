@@ -41,7 +41,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			if (DONUT_LANG_RTL) {
 				$css_paths['rtl'] = 'css/donut-rtl.css' ;
 			}
-			
+
 			if (DONUT_ACTIVATE_PROD_MODE) {
 				$cdn_css_paths = array(
 					'bootstrap' => donut_opt::BS_CSS_CDN ,
@@ -67,7 +67,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			}
 			$this->body_prefix();
 			$this->notices();
-			
+
 			if ($this->template !== 'question') {
 				$this->output('<main class="donut-masthead">');
 				$this->output('<div class="container">');
@@ -98,9 +98,9 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			$this->widgets('full', 'low');
 			$this->footer();
 			$this->widgets('full', 'bottom');
-			
+
 			$this->output('</div> <!-- END body-wrapper -->');
-			
+
 			$this->body_suffix();
 		}
 
@@ -109,16 +109,16 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			$content=$this->content;
 
 			$this->output('<div class="qa-main pull-left'.(@$this->content['hidden'] ? ' qa-main-hidden' : '').'">');
-			
+
 			if (!empty($this->content['navigation']['sub']) || $this->template == 'admin') {
 				$this->donut_sidebar_toggle_nav_btn();
 			}
 
 			$this->widgets('main', 'top');
-			
+
 			if($this->template == 'question') {
 				$this->page_title_error();
-			}	
+			}
 
 			if (!empty($this->content['navigation']['sub']) || $this->template == 'admin') {
 
@@ -131,12 +131,12 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			$this->widgets('main', 'high');
 
 			$this->main_parts($content);
-		
+
 			$this->widgets('main', 'low');
 
 			$this->page_links();
 			$this->suggest_next();
-			
+
 			$this->widgets('main', 'bottom');
 
 			$this->output('</div> <!-- END qa-main -->', '');
@@ -156,7 +156,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			$this->output('</div>', '');
 		}
 
-		function logged_in() 
+		function logged_in()
 		{
 			if (qa_is_logged_in()) // output user avatar to login bar
 				$this->output(
@@ -167,17 +167,17 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 						qa_get_logged_in_user_field('avatarblobid'), qa_get_logged_in_user_field('avatarwidth'), qa_get_logged_in_user_field('avatarheight'),
 						24, true),
             		'</div>'
-            	);				
-			
+            	);
+
 			qa_html_theme_base::logged_in();
-			
+
 			if (qa_is_logged_in()) { // adds points count after logged in username
 				$userpoints=qa_get_logged_in_points();
-				
+
 				$pointshtml=($userpoints==1)
 					? qa_lang_html_sub('main/1_point', '1', '1')
 					: qa_lang_html_sub('main/x_points', qa_html(number_format($userpoints)));
-						
+
 				$this->output(
 					'<span class="qa-logged-in-points">',
 					'('.$pointshtml.')',
@@ -185,7 +185,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 				);
 			}
 		}
-    
+
 		function body_header() // adds login bar, user navigation and search at top of page in place of custom header content
 		{
 			if (!empty($this->content['navigation']['main'])) {
@@ -193,7 +193,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 				unset($this->content['navigation']['main']);
 			}
         }
-		
+
 		function header_custom() // allows modification of custom element shown inside header after logo
 		{
 			if (isset($this->content['body_header'])) {
@@ -202,12 +202,12 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 				$this->output('</div>');
 			}
 		}
-		
+
 		function header() // removes user navigation and search from header and replaces with custom header content. Also opens new <div>s
-		{	
+		{
 			$this->output('<div class="qa-header">');
-			
-			// $this->logo();						
+
+			// $this->logo();
 			$this->header_clear();
 			$this->header_custom();
 
@@ -228,7 +228,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 
 		function left_side_bar($sub_navigation)
 		{
-			
+
 			$this->output('<div class="qa-left-side-bar" id="sidebar" role="navigation">', '');
 			if (count($sub_navigation)) {
 
@@ -239,7 +239,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 				}
 				$this->output('</div>', '');
 				if ($this->template === 'admin') {
-					unset($this->content['navigation']['sub']);	
+					unset($this->content['navigation']['sub']);
 				}
 			}
 			$this->output('</div>', '<!-- END of left-side-bar -->');
@@ -248,17 +248,17 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		function a_selection($post)
 		{
 			$this->output('<div class="qa-a-selection">');
-			
+
 			if (isset($post['select_tags']))
 				$this->post_hover_button($post, 'select_tags', '', 'qa-a-select');
 			elseif (isset($post['unselect_tags']))
 				$this->post_hover_button($post, 'unselect_tags', '', 'qa-a-unselect');
 			elseif ($post['selected'])
 				$this->output('<div class="qa-a-selected"> <span class="fa fa-check"></span> </div>');
-			
+
 			if (isset($post['select_text']))
 				$this->output('<div class="qa-a-selected-text">'.@$post['select_text'].'</div>');
-			
+
 			$this->output('</div>');
 		}
 
@@ -266,20 +266,20 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		 * prevent display of regular footer content (see body_suffix()) and replace with closing new <div>s
 		 * @return  null
 		 */
-		function footer() 
+		function footer()
 		{
 			$this->output('</div> <!-- END main-wrapper -->');
-			$this->output('</div> <!-- END main-shadow -->');		
-		}		
+			$this->output('</div> <!-- END main-shadow -->');
+		}
 
 		/**
 		 * add RSS feed icon after the page title
-		 * @return null 
+		 * @return null
 		 */
 		function feed_link()
 		{
 			$feed=@$this->content['feed'];
-			
+
 			if (!empty($feed))
 				$this->output('<a href="'.$feed['url'].'" title="'.@$feed['label'].'" class="qa-rss-feed"><i class="fa fa-rss qa-rss-icon" ></i></a>');
 		}
@@ -287,12 +287,12 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		function page_title_error()
 		{
 			$favorite=@$this->content['favorite'];
-			
+
 			if (isset($favorite))
 				$this->output('<form '.$favorite['form_tags'].'>');
-			
+
 			$this->feed_link();
-				
+
 			$this->output('<h1>');
 			$this->favorite();
 			$this->title();
@@ -309,13 +309,13 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 
 		/**
 		 * add view count to question list
-		 * @param  array $q_item 
-		 * @return null 
+		 * @param  array $q_item
+		 * @return null
 		 */
-		function q_item_stats($q_item) 
+		function q_item_stats($q_item)
 		{
 			$this->output('<div class="qa-q-item-stats">');
-			
+
 			$this->voting($q_item);
 			$this->a_count($q_item);
 			// qa_html_theme_base::view_count($q_item);
@@ -326,46 +326,46 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		function post_meta($post, $class, $prefix=null, $separator='<br/>')
 		{
 			$this->output('<span class="'.$class.'-meta">');
-			
+
 			if (isset($prefix))
 				$this->output($prefix);
-			
+
 			$order=explode('^', @$post['meta_order']);
-			
+
 			foreach ($order as $element)
 				switch ($element) {
 					case 'what':
 						$this->post_meta_what($post, $class);
 						break;
-						
+
 					case 'when':
 						$this->post_meta_when($post, $class);
 						break;
-						
+
 					case 'where':
 						$this->post_meta_where($post, $class);
 						break;
-						
+
 					case 'who':
 						$this->post_meta_who($post, $class);
 						break;
 				}
-				
+
 			$this->post_meta_flags($post, $class);
-			
+
 			if (!empty($post['what_2'])) {
 				$this->output($separator);
-				
+
 				foreach ($order as $element)
 					switch ($element) {
 						case 'what':
 							$this->output('<span class="'.$class.'-what">'.$post['what_2'].'</span>');
 							break;
-						
+
 						case 'when':
 							$this->output_split(@$post['when_2'], $class.'-when');
 							break;
-						
+
 						case 'who':
 							$this->output_split(@$post['who_2'], $class.'-who');
 							break;
@@ -376,11 +376,11 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		function view_count($q_item) // prevent display of view count in the usual place
-		{	
+		{
 			if ($this->template=='question')
 				qa_html_theme_base::view_count($q_item);
 		}
-		
+
 		function body_suffix() // to replace standard Q2A footer
         {
 			$this->output('<footer class="donut-footer">');
@@ -398,7 +398,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
         		$this->output('<button '.$post[$element].' type="submit" value="'.$value.'" class="'.$class.'-button"/> '.$icon.'</button>');
         	}
         }
-        
+
         function post_disabled_button($post, $element, $value, $class)
         {
         	if (isset($post[$element])){
@@ -410,7 +410,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		function form_button_data($button, $key, $style)
 		{
 			$baseclass='qa-form-'.$style.'-button qa-form-'.$style.'-button-'.$key;
-			
+
 			$this->output('<button'.rtrim(' '.@$button['tags']).' title="'.@$button['popup'].'" type="submit"'.
 				(isset($style) ? (' class="'.$baseclass.'"') : '').'>'.@$button['label'].'</button>');
 		}
@@ -419,7 +419,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		 * prints the favorite button
 		 * @param  array $tags  parameters
 		 * @param  [type] $class class
-		 * @return null 
+		 * @return null
 		 */
 		function favorite_button($tags, $class)
 		{
@@ -436,7 +436,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		function feed()
 		{
 			$feed=@$this->content['feed'];
-			
+
 			if (!empty($feed)) {
 				$icon = donut_get_fa_icon('rss');
 				$this->output('<div class="qa-feed">');
@@ -449,7 +449,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * Attribution link for the theme which adds the authors name 
+		 * Attribution link for the theme which adds the authors name
 		 * @return [type] [description]
 		 */
 		function attribution()
@@ -465,7 +465,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * beautifies the default waiting template with a font aswome icon 
+		 * beautifies the default waiting template with a font aswome icon
 		 * @return null
 		 */
 		function waiting_template()
@@ -474,54 +474,54 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * beautifies the default notice 
+		 * beautifies the default notice
 		 * @param  array $notice notice parameters
 		 * @return null
 		 */
 		function notice($notice)
 		{
 			$this->output('<div class="qa-notice alert alert-info text-center alert-dismissible" role="alert" id="'.$notice['id'].'">');
-			
+
 			if (isset($notice['form_tags']))
 				$this->output('<form '.$notice['form_tags'].'>');
-			
+
 			$this->output('<button '.$notice['close_tags'].' type="submit" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>');
-			
+
 			$this->output_raw($notice['content']);
-			
-			
+
+
 			if (isset($notice['form_tags'])) {
 				$this->form_hidden_elements(@$notice['form_hidden']);
 				$this->output('</form>');
 			}
-			
+
 			$this->output('</div>');
 		}
-		
+
 		/**
-		 * prints the navbar search on the top 
+		 * prints the navbar search on the top
 		 * @return null
 		 */
 		function search()
 		{
 			$search=$this->content['search'];
-			
+
 			$this->output(
 				'<form class="navbar-form pull-right" role="form" '.$search['form_tags'].'>',
 				@$search['form_extra']
 			);
-			
+
 			$this->search_field($search);
 			// $this->search_button($search);
-			
+
 			$this->output(
 				'</form>'
 			);
 		}
 
 		/**
-		 * prints the search field 
-		 * @param  array $search 
+		 * prints the search field
+		 * @param  array $search
 		 * @return null
 		 */
 		function search_field($search)
@@ -535,8 +535,8 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 
 		/**
 		 * prints the aearch button
-		 * @param  array $search 
-		 * @return null 
+		 * @param  array $search
+		 * @return null
 		 */
 		function search_button($search)
 		{
@@ -548,7 +548,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		/**
 		 * prints the css path
 		 * @param  string  $path     path of the css file
-		 * @param  boolean $external weather it is relative to the theme or a external to the theme 
+		 * @param  boolean $external weather it is relative to the theme or a external to the theme
 		 * @return null
 		 */
 		function donut_css($path , $external = false)
@@ -567,7 +567,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		/**
 		 * prints the js path
 		 * @param  string  $path     path of the js file
-		 * @param  boolean $external weather it is relative to the theme or a external to the theme 
+		 * @param  boolean $external weather it is relative to the theme or a external to the theme
 		 * @return null
 		 */
 		function donut_js($path , $external = false)
@@ -584,10 +584,10 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints the CSS and JS links 
+		 * prints the CSS and JS links
 		 * @param  array  $paths    list of the resources
-		 * @param  string  $type     type of the resource css or js 
-		 * @param  boolean $external weather it is relative to the theme or a external to the theme 
+		 * @param  string  $type     type of the resource css or js
+		 * @param  boolean $external weather it is relative to the theme or a external to the theme
 		 * @return null
 		 */
 		function donut_resources($paths , $type = 'css' , $external = false )
@@ -659,7 +659,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * grabs the sub-nav links for the navigation items 
+		 * grabs the sub-nav links for the navigation items
 		 * @param  array $navigation navigation links
 		 * @return null
 		 */
@@ -706,7 +706,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * nav item for the sidebar 
+		 * nav item for the sidebar
 		 * @param  array $nav_item navigation item
 		 * @return null
 		 */
@@ -718,15 +718,15 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints a single nav-bar item 
-		 * @param  array $nav_item navigation item 
+		 * prints a single nav-bar item
+		 * @param  array $nav_item navigation item
 		 * @return null
 		 */
 		function donut_nav_bar_item($nav_item)
 		{
 			$class  = (!!@$nav_item['class']) ? $nav_item['class'] .' ' : '' ;
 			$class .= (!!@$nav_item['selected']) ? 'active' : '' ;
-			
+
 			if (!empty($class)) {
 				$class = 'class="'.$class.'"' ;
 			}
@@ -737,15 +737,15 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * Prints the drop down menu 
-		 * @param  array $nav_item      the navigation item 
-		 * @param  attay $sub_nav_items sub-nav items to be displayed 
+		 * Prints the drop down menu
+		 * @param  array $nav_item      the navigation item
+		 * @param  attay $sub_nav_items sub-nav items to be displayed
 		 * @return null
 		 */
 		function donut_nav_bar_drop_down($nav_item , $sub_nav_items)
 		{
 			$class = (!!@$nav_item['selected']) ? 'active' : '' ;
-			
+
 			if (!empty($sub_nav_items) && count($sub_nav_items)) {
 				$nav_item['class'] = "dropdown-split-left" ;
 				$this->donut_nav_bar_item($nav_item);
@@ -763,7 +763,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints sidebar navigation 
+		 * prints sidebar navigation
 		 * @return  null
 		 */
 		function donut_sidebar_toggle_nav_btn()
@@ -778,7 +778,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints the defult meta and view ports 
+		 * prints the defult meta and view ports
 		 * @return  null
 		 */
 		function donut_default_meta()
@@ -799,8 +799,8 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints the view count 
-		 * @param  array 
+		 * prints the view count
+		 * @param  array
 		 * @return null
 		 */
 		function donut_view_count($post)
@@ -814,8 +814,8 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * adds support for old IE browsers 
-		 * 
+		 * adds support for old IE browsers
+		 *
 		 */
 		function donut_utility_for_old_ie()
 		{
@@ -829,8 +829,8 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 		}
 
 		/**
-		 * prints the drop down for the user 
-		 * 
+		 * prints the drop down for the user
+		 *
 		 */
 		function donut_user_drop_down(){
 			if (qa_is_logged_in()) {
@@ -847,17 +847,17 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 	        if (!$rows) {
 	        	$rows = 1 ;
 	        }
-	        
+
 	        if (@$ranking['type'] == 'users') {
 	            $this->output('<div class="page-users-list clearfix"><div class="row">');
-	            
+
 	            if(isset($ranking['items']))
 					$columns=ceil(count($ranking['items'])/$rows);
-				
+
 	            if (isset($ranking['items']))
 	            {
 					$pagesize  = qa_opt('page_size_users');
-					$start     = qa_get_start();	
+					$start     = qa_get_start();
 					$users     = qa_db_select_with_pending(qa_db_top_users_selectspec($start, qa_opt_if_loaded('page_size_users')));
 					$users     = array_slice($users, 0, $pagesize);
 					$usershtml = qa_userids_handles_html($users);
@@ -867,7 +867,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 						$user_raw    = !empty($user['raw']) ? $user['raw'] : $user ;
 						$handle      = @$user_raw['handle'];
 						$handle_html = @$usershtml[$user_raw['userid']];
-	                    
+
 	                    if (isset($user_raw['userid'])) {
 	                    	$user_rank  = qa_db_select_with_pending(qa_db_user_rank_selectspec($user_raw['userid'],true));
 	                    	$level_html = qa_user_level_string($user_rank);
@@ -879,7 +879,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 	                    if (empty($handle_html)) {
 	                    	$handle_html = $user['label'];
 	                    }
-						
+
 						$avatar = (QA_FINAL_EXTERNAL_USERS
 										? qa_get_external_avatar_html(@$user_raw['userid'], qa_opt('avatar_users_size'), true)
 										: qa_get_user_avatar_html(@$user_raw['flags'], @$user_raw['email'], @$user_raw['handle'],
@@ -911,52 +911,52 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 
 	                    if (qa_opt('badge_active') && function_exists('qa_get_badge_list'))
 	                        $this->output('<div class="badge-list">' . donut_user_badge($handle) . '</div>');
-	                    
+
 	                    $this->output('</div>');
 	                    $this->output('</div>');
 
-	                } 
+	                }
 	            }else {
 	                $this->output('
 								<div class="no-items">
 									<h3 class="">' . qa_lang_html('main/no_active_users') . '</h3>
 								</div>');
 				}
-	            
-	            
+
+
 	            $this->output('</div>');
 	            $this->output('</div>');
-	            
+
 	        } elseif (@$ranking['type'] == 'tags') {
-	            
+
 	            if ($rows > 0) {
 	                $this->output('<div id="tags-list" class="row ' . $class . '">');
-					
+
 					$tags = array();
 					foreach(@$ranking['items'] as $item)
 						$tags[] = strip_tags($item['label']);
-					
-					
+
+
 	                $columns = ceil(count($ranking['items']) / $rows);
-	                
+
 	                for ($column = 0; $column < $columns; $column++) {
 	                    $this->set_context('ranking_column', $column);
 	                    $this->output('<div class="col-md-' . ceil(12 / $columns) . ' col-xs-12" >');
 	                    $this->output('<ul class="donut-tags-list">');
-	                    
+
 	                    for ($row = 0; $row < $rows; $row++) {
 	                        $this->set_context('ranking_row', $row);
 	                        $this->donut_tags_item(@$ranking['items'][$column * $rows + $row], $class, $column > 0);
 	                    }
-	                    
+
 	                    $this->clear_context('ranking_column');
-	                    
+
 	                    $this->output('</ul>');
 	                    $this->output('</div>');
 	                }
-	                
+
 	                $this->clear_context('ranking_row');
-	                
+
 	                $this->output('</div>');
 	            } else
 	                $this->output('
@@ -964,31 +964,31 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 						<h3 class="icon-warning">' . qa_lang('cleanstrap/no_tags') . '</h3>
 						<p>' . qa_lang('cleanstrap/no_results_detail') . '</p>
 						</div>');
-	            
+
 	        } else {
-	            
-	            
+
+
 	            if ($rows > 0) {
 	                $this->output('<table class="' . $class . '-table">');
-	                
+
 	                $columns = ceil(count($ranking['items']) / $rows);
-	                
+
 	                for ($row = 0; $row < $rows; $row++) {
 	                    $this->set_context('ranking_row', $row);
 	                    $this->output('<tr>');
-	                    
+
 	                    for ($column = 0; $column < $columns; $column++) {
 	                        $this->set_context('ranking_column', $column);
 	                        $this->ranking_item(@$ranking['items'][$column * $rows + $row], $class, $column > 0);
 	                    }
-	                    
+
 	                    $this->clear_context('ranking_column');
-	                    
+
 	                    $this->output('</tr>');
 	                }
-	                
+
 	                $this->clear_context('ranking_row');
-	                
+
 	                $this->output('</table>');
 	            } else
 	                $this->output('
@@ -1001,7 +1001,7 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
         function donut_tags_item($item, $class, $spacer)
         {
             $content = qa_db_read_one_value( qa_db_query_sub("SELECT ^tagmetas.content FROM ^tagmetas WHERE ^tagmetas.tag =$ ", strip_tags($item['label'])), true);
-    		
+
             if (isset($item))
                 $this->output(
     				'<li class="tag-item">',
@@ -1019,14 +1019,14 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
     				 '</li>' );
         }
         function truncate($string, $limit, $pad="...") {
-              if(strlen($string) <= $limit) 
-                    return $string; 
-              else{ 
+              if(strlen($string) <= $limit)
+                    return $string;
+              else{
                     $text = $string.' ';
                     $text = substr($text,0,$limit);
                     $text = substr($text,0,strrpos($text,' '));
                     return $text.$pad;
-              } 
+              }
         }
 	}
 /*

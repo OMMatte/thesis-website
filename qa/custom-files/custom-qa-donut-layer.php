@@ -1,9 +1,22 @@
+
 <?php
 if (!defined('QA_VERSION')) { // don't allow this page to be requested directly from browser
     header('Location: ../../');
     exit;
 }
 
+/**
+ * How-to add this custom functionality:
+ *
+ * ADD:
+ * require_once $_SERVER['DOCUMENT_ROOT'] . '/qa/custom-files/custom-qa-donut-layer.php';
+ * In the end of qa-theme.php in qa-theme/Donut/
+ *
+ * Rename class 'qa_html_theme' to 'qa_html_theme_ADDED_THIS' in qa-theme/Donut/qa-donut-layer.php
+ *
+ * Note that that most (maybe every) other custom file is added within this file.
+ * So doing the above should automatically add those custom files as well
+ */
 class qa_html_theme extends qa_html_theme_ADDED_THIS
 {
 
@@ -84,7 +97,6 @@ class qa_html_theme extends qa_html_theme_ADDED_THIS
         }
 
         $this->donut_resources($js_paths , 'js');
-
     }
 
     /**
@@ -173,6 +185,17 @@ class qa_html_theme extends qa_html_theme_ADDED_THIS
         </nav>
         <?php
         return ob_get_clean();
+    }
+
+    /**
+     * Added custom login drop-down
+     */
+    function donut_user_drop_down(){
+        if (qa_is_logged_in()) {
+            require_once DONUT_THEME_BASE_DIR . '/templates/user-loggedin-drop-down.php';
+        }else {
+            require_once $_SERVER['DOCUMENT_ROOT'] . '/qa/custom-files/custom-user-login-drop-down.php';
+        }
     }
 }
 /*

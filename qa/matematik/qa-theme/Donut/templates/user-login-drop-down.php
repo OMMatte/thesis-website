@@ -38,11 +38,14 @@ $print_or = false ;
 							$icon = 'class="' . @$class[1] . ' fa fa-linkedin"';
 						elseif ($k == 'vk')
 							$icon = 'class="' . @$class[1] . ' fa fa-vk"';
+                        elseif ($k == 'facebook-login')
+                            $this->output(@$this->content['navigation']['user']['facebook-login']['label']);
 
 						$pattern = "/_(?=[^>]*<)/";
 
 						$custom['label'] = preg_replace($pattern,$icon ,$custom['label']);
 						$this->output(str_replace(@$class[0], @$icon, @$custom['label']));
+
 						$print_or = true ;
 					}
 				}	

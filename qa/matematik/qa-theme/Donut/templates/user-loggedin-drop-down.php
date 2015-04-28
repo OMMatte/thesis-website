@@ -59,9 +59,9 @@ if (isset($this->content['navigation']['user']['updates'])) {
 			<?php endif ?>
 		<?php endforeach ?>
 		<li>
-			<a href="<?php echo @$this->content['navigation']['user']['logout']['url'] ?>">
-				<span class="fa fa-power-off"></span>	
-				<?php echo @$this->content['navigation']['user']['logout']['label'] ?>
+            <a href="<?php echo @$this->content['navigation']['user']['logout']['url'] ?>">
+                <span class="fa fa-power-off"></span>
+                <?php echo @$this->content['navigation']['user']['logout']['label'] ?>
 			</a>
 		</li>
 	</ul>
