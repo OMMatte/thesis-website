@@ -1,17 +1,5 @@
 <html lang="en">
 <head>
-<!--    --><?php
-//    define('QA_BASE_DIR', 'qa/fysik/');
-//
-//    require_once QA_BASE_DIR.'qa-include/qa-base.php';
-//    require_once QA_BASE_DIR.'qa-include/qa-app-users.php';
-//    require_once QA_BASE_DIR.'qa-include/qa-db.php';
-//
-//    //qa_base_db_connect(null);
-//
-//    ?>
-
-
     <?php
     include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
     include($full_php_path . "head.php");
