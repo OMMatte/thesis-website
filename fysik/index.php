@@ -2,24 +2,24 @@
 <head>
     <?php
     include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
-    include($full_php_path . "head.php");
+    include(PATH_FULL_PHP . "head.php");
     ?>
 </head>
 
 <body id="body_physics">
 
 <?php
-include($full_php_path . "body_top.php");
+include(PATH_FULL_PHP . "body_top.php");
 ?>
 
 <div class="container" id="top_container">
 
     <?php
-    include($full_php_path . "footer.php");
+    include(PATH_FULL_PHP . "footer.php");
     ?>
 </div>
 <?php
-include($full_php_path . "body_bottom.php");
+include(PATH_FULL_PHP . "body_bottom.php");
 ?>
 
 <script>

@@ -3,37 +3,30 @@ echo '<script>';
 echo 'extendNamespace(function(elevutveckling) {';
 
 echo 'var paths = {';
-echo 'images: "' . $image_path . '",';
-echo 'json: "' . $json_path . '",';
-echo 'qa: "' . $qa_path . '",';
-echo 'qaShared: "' . $qa_shared_path . '"';
+echo 'images: "' . PATH_IMAGES . '",';
+echo 'json: "' . PATH_JSON . '",';
+echo 'qa: "' . PATH_QA . '",';
+echo 'qaShared: "' . PATH_QA_SHARED . '"';
 echo '};';
 
 echo 'var subjects = {};';
 echo 'subjects.math = {';
-echo 'eng: "' . $subjects["math"][0] . '",';
-echo 'sv: "' . $subjects["math"][1] . '"';
+echo 'eng: "' . unserialize(SUBJECTS)["math"][0] . '",';
+echo 'sv: "' . unserialize(SUBJECTS)["math"][1] . '"';
 echo '};';
 
 echo 'subjects.phys = {';
-echo 'eng: "' . $subjects["phys"][0] . '",';
-echo 'sv: "' . $subjects["phys"][1] . '"';
+echo 'eng: "' . unserialize(SUBJECTS)["phys"][0] . '",';
+echo 'sv: "' . unserialize(SUBJECTS)["phys"][1] . '"';
 echo '};';
 
 echo 'subjects.chem = {';
-echo 'eng: "' . $subjects["chem"][0] . '",';
-echo 'sv: "' . $subjects["chem"][1] . '"';
+echo 'eng: "' . unserialize(SUBJECTS)["chem"][0] . '",';
+echo 'sv: "' . unserialize(SUBJECTS)["chem"][1] . '"';
 echo '};';
-
-
-echo 'var queryString = {';
-echo 'qaConf: "' . $query_string_qa_conf . '"';
-echo '};';
-
 
 echo 'elevutveckling.subjects = subjects;';
 echo 'elevutveckling.paths = paths;';
-echo 'elevutveckling.queryString = queryString';
 
 echo '});';
 echo '</script>';

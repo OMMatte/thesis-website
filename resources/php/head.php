@@ -11,23 +11,23 @@
 <!-- Framework Files -->
 
 <!-- Bootstrap core CSS -->
-<link href="<?php echo $framework_css_path ?>bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo PATH_FRAMEWORKS_CSS ?>bootstrap.min.css" rel="stylesheet">
 
 <!-- iHover style CSS. For hover over image effects -->
-<link href="<?php echo $framework_css_path ?>ihover.css" rel="stylesheet">
+<link href="<?php echo PATH_FRAMEWORKS_CSS ?>ihover.css" rel="stylesheet">
 
 
 <!-- Regular Files -->
 
 <!-- Main CSS -->
-<link href="<?php echo $css_path ?>main.css" rel="stylesheet">
+<link href="<?php echo PATH_CSS ?>main.css" rel="stylesheet">
 
-<link href="<?php echo $css_path ?>login.css" rel="stylesheet">
+<link href="<?php echo PATH_CSS ?>login.css" rel="stylesheet">
 
 <!-- Custom styles for this bootstrap template -->
-<link href="<?php echo $css_path ?>jumbotron.css" rel="stylesheet">
+<link href="<?php echo PATH_CSS ?>jumbotron.css" rel="stylesheet">
 
-<link href="<?php echo $css_path ?>thumbnail.css" rel="stylesheet">
+<link href="<?php echo PATH_CSS ?>thumbnail.css" rel="stylesheet">
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

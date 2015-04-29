@@ -1,36 +1,45 @@
 <?php
 //*** DIRECTORY PATHS ***
+define('PATH_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 
-$root_path = $_SERVER['DOCUMENT_ROOT'];
-$files_dir = '/resources/';
-$framework_files_dir = "/dist/";
+define('PATH_RESOURCES', '/resources/');
+define('PATH_PHP', PATH_RESOURCES . 'php/');
+define('PATH_CSS', PATH_RESOURCES . 'css/');
+define('PATH_JS', PATH_RESOURCES . 'js/');
+define('PATH_JSON', PATH_RESOURCES . 'json/');
+define('PATH_IMAGES', PATH_RESOURCES . 'images/');
 
-$php_path = $files_dir . "php/";
-$css_path = $files_dir . "css/";
-$js_path = $files_dir . "js/";
-$json_path = $files_dir . 'json/';
-$image_path = $files_dir . "images/";
-$qa_path = "qa/";
-$qa_shared_path = $qa_path . "shared-files";
+define('PATH_FRAMEWORKS', '/dist/');
+define('PATH_FRAMEWORKS_CSS', PATH_FRAMEWORKS . 'css/');
+define('PATH_FRAMEWORK_JS', PATH_FRAMEWORKS . 'js/');
+define('PATH_FRAMEWORK_FONT', PATH_FRAMEWORKS . 'fonts/');
 
-$full_php_path = $root_path . $php_path;
-$full_qa_path = $root_path . $qa_path;
+define('PATH_QA', '/qa/');
+define('PATH_QA_SHARED', PATH_QA . 'shared-files/');
 
-$framework_css_path = $framework_files_dir . "css/";
-$framework_js_path = $framework_files_dir . "js/";
-$framework_font_path = $framework_files_dir . "fonts/";
+define('PATH_FULL_PHP', PATH_ROOT . PATH_PHP);
+define('PATH_FULL_QA', PATH_ROOT . PATH_QA);
+
 
 //*** DATABASE VARIABLES ***
-$database_name =
+//define('QA_MYSQL_HOSTNAME', '127.0.0.1');
+//define('QA_MYSQL_USERNAME', 'awzctixl_ommatte');
+//define('QA_MYSQL_PASSWORD', '123A654B789C');
+//
+//
+//if (gethostname() == 'mathiass-air') {
+//    define('QA_MYSQL_DATABASE', 'awzctixl_localhost');
+//} else {
+//    define('QA_MYSQL_DATABASE', 'awzctixl_elevutveckling');
+//}
 
 
 //*** GENERAL VARIABLES ***
+define('KEY_SUBJECT_MATH', 'math');
+define('KEY_SUBJECT_PHYS', 'phys');
+define('KEY_SUBJECT_CHEM', 'chem');
 
-$subjects = array
-(
-    'math' => array('mathematics', 'matematik'),
-    'phys' => array('physics', "fysik"),
-    'chem' => array('chemistry', "kemi")
-);
-
-$query_string_qa_conf = "conf_filename";
+define ("SUBJECTS", serialize(array(
+    KEY_SUBJECT_MATH => array('mathematics', 'matematik'),
+    KEY_SUBJECT_PHYS => array('physics', 'fysik'),
+    KEY_SUBJECT_CHEM => array('chemistry', 'kemi'))));

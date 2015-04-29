@@ -2,7 +2,7 @@
 <head>
     <?php
     include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
-    include($full_php_path . "head.php");
+    include(PATH_FULL_PHP . "head.php");
     ?>
 </head>
 
@@ -12,7 +12,7 @@
 <?php
 //echo qa_get_logged_in_userid().' '.qa_get_logged_in_handle().' '.qa_get_logged_in_email().' '.qa_get_logged_in_level();
 
-include($full_php_path . "body_top.php");
+include(PATH_FULL_PHP . "body_top.php");
 ?>
 
 <div class="container" id="top_container">
@@ -21,11 +21,11 @@ include($full_php_path . "body_top.php");
     </div>
 
     <?php
-    include($full_php_path . "footer.php");
+    include(PATH_FULL_PHP . "footer.php");
     ?>
 </div>
 <?php
-include($full_php_path . "body_bottom.php");
+include(PATH_FULL_PHP . "body_bottom.php");
 ?>
 
 

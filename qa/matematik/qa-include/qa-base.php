@@ -1335,8 +1335,6 @@
 				break;
 		}
 
-//        require $_SERVER['DOCUMENT_ROOT'] . '/global_variables.php';
-//        $params[$query_string_qa_conf] = $_GET[$query_string_qa_conf];
 		if (isset($params))
 			foreach ($params as $key => $value)
 				$paramsextra.=(strlen($paramsextra) ? '&' : '?').urlencode($key).'='.urlencode((string)$value);

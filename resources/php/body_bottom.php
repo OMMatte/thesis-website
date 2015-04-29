@@ -1,15 +1,15 @@
 <!-- Main javascript functions -->
-<script type="text/javascript" src="<?php echo $js_path ?>main.js"></script>
-<script type="text/javascript" src="<?php echo $js_path ?>elevutveckling.js"></script>
-<script type="text/javascript" src="<?php echo $js_path ?>header.js"></script>
+<script type="text/javascript" src="<?php echo PATH_JS ?>main.js"></script>
+<script type="text/javascript" src="<?php echo PATH_JS ?>elevutveckling.js"></script>
+<script type="text/javascript" src="<?php echo PATH_JS ?>header.js"></script>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="<?php echo $framework_js_path ?>bootstrap.min.js"></script>
+<script src="<?php echo PATH_FRAMEWORK_JS ?>bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="<?php echo $framework_js_path ?>ie10-viewport-bug-workaround.js"></script>
+<script src="<?php echo PATH_FRAMEWORK_JS ?>ie10-viewport-bug-workaround.js"></script>
 
 
 <script id="hiddenlpsubmitdiv" style="display: none;"></script>
@@ -50,5 +50,5 @@
 </script>
 
 <?php
-include($root_path . "/global_variables_js.php");
+include(PATH_ROOT . "/global_variables_js.php");
 ?>
