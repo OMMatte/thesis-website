@@ -1,5 +1,7 @@
 <?php
-//*** DIRECTORY PATHS ***
+/**
+ * PATH OR DIRECTORY CONSTANTS
+ */
 define('PATH_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/');
 
 define('PATH_RESOURCES', '/resources/');
@@ -21,7 +23,9 @@ define('PATH_FULL_PHP', PATH_ROOT . PATH_PHP);
 define('PATH_FULL_QA', PATH_ROOT . PATH_QA);
 
 
-//*** DATABASE VARIABLES ***
+/**
+ * DATABASE CONSTANTS
+ */
 define('MYSQL_HOSTNAME', '127.0.0.1');
 define('MYSQL_USERNAME', 'awzctixl_ommatte');
 define('MYSQL_PASSWORD', '123A654B789C');
@@ -33,7 +37,9 @@ if (gethostname() == 'mathiass-air') {
 }
 
 
-//*** GENERAL VARIABLES ***
+/**
+ * GENERAL CONSTANTS
+ */
 define('KEY_SUBJECT_MATH', 'math');
 define('KEY_SUBJECT_PHYS', 'phys');
 define('KEY_SUBJECT_CHEM', 'chem');
