@@ -1,6 +1,5 @@
-<!-- Added original facebook plugin login-->
-
 <?php
+// Added original facebook plugin login
 $print_or = false ;
 ?>
 <li class="dropdown login-dropdown login active"> 

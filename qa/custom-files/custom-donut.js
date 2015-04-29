@@ -10,7 +10,7 @@ jQuery(document).ready(function () {
          * @param info
          */
         function changeParentIframe(info) {
-            var height = document.documentElement.scrollHeight;
+            var height = document.documentElement.offsetHeight;
             if (info != 'undefined') {
                 console.log(info + ": " + height);
             }
