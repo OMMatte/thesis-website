@@ -22,16 +22,15 @@ define('PATH_FULL_QA', PATH_ROOT . PATH_QA);
 
 
 //*** DATABASE VARIABLES ***
-//define('QA_MYSQL_HOSTNAME', '127.0.0.1');
-//define('QA_MYSQL_USERNAME', 'awzctixl_ommatte');
-//define('QA_MYSQL_PASSWORD', '123A654B789C');
-//
-//
-//if (gethostname() == 'mathiass-air') {
-//    define('QA_MYSQL_DATABASE', 'awzctixl_localhost');
-//} else {
-//    define('QA_MYSQL_DATABASE', 'awzctixl_elevutveckling');
-//}
+define('MYSQL_HOSTNAME', '127.0.0.1');
+define('MYSQL_USERNAME', 'awzctixl_ommatte');
+define('MYSQL_PASSWORD', '123A654B789C');
+
+if (gethostname() == 'mathiass-air') {
+    define('MYSQL_DATABASE', 'awzctixl_localhost');
+} else {
+    define('MYSQL_DATABASE', 'awzctixl_elevutveckling');
+}
 
 
 //*** GENERAL VARIABLES ***
