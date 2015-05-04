@@ -235,51 +235,136 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return $(html)
         };
 
-        function roomClickEvent(roomName) {
-            var id = "groupworld_frame";
-            $("#" + id).remove();
-            var $roomFrame = $("<iframe width=\"100%\" height=\"1000\" scrolling=\"no\" frameborder=\"0\" src=\"http://www.groupworld.net/mp/parse.cgi?filename=mathjs&inst_id=1434&instance=" + $.trim(roomName) + "&width=100%&height=100%&iframe=true\"></iframe>");
+        function isTrue(value) {
+            return (value === 'true' || value === 1 || value === true);
+        }
 
+
+        function getRoomInstance(roomName, instanceName) {
+            var id = "groupworld_frame";
+            // Remove old instance
+            $("#" + id).remove();
+            var $roomFrame = $("<iframe width='100%' height='1000' scrolling='no' frameborder='0' src='http://www.groupworld.net/mp/parse.cgi?filename=mathjs&inst_id=1434&instance=" + instanceName + "&width=100%&height=100%&iframe=true'></iframe>");
             var $headingWithFrame = elevutveckling.generateHeadingPanel(roomName, $roomFrame);
             $headingWithFrame.attr("id", id);
-            $("#top_container").prepend($headingWithFrame);
+            return $headingWithFrame;
         }
 
-        function generateRooms(jsonKey, callback) {
-            elevutveckling.retrieveJsonData(elevutveckling.paths.json + "rooms.json", function (jsonData) {
-                var $roomHtml = $("<div class=\"row\">");
-                var roomList = jsonData[jsonKey].rooms;
-                var image_name = jsonData[jsonKey].image_name;
-                roomList.forEach(function (room) {
-                    var name = room.name;
-                    $roomHtml.append($("<div class=\"col-xs-6 col-sm-4 col-md-3 col-lg-2\">" +
-                    "<a href=\"#\" class=\"thumbnail\">" +
-                    "<img src=\"" + elevutveckling.paths.images + image_name + "\" alt=\"120x120\">" +
 
-                    "<div class=\"caption\">" +
-                    "<p class=\"text-center\"><strong>" + name + "</strong></p>" +
-                        // "<hr>" +
+        function attemptAccessRoom(roomId, roomName, roomPassword, callback, callbackErrorInfo) {
+            var postArray = {id: roomId};
+            if (roomPassword !== undefined) {
+                postArray['password'] = $.md5(roomPassword);
+            }
+            $.post(elevutveckling.paths.server + "get_hidden_room_name.php", postArray, function (result) {
+                if (result.status === 'success') {
+                    console.log(result);
+                    $("#top_container").prepend(getRoomInstance(roomName, result.hiddenName));
+                }
+                else if (result.status === 'failure') {
+
+                    // Show error info
+                    var $errorInfo = $(
+                        "<div class='alert alert-danger'>" +
+                        "<a href='#' class='close' data-dismiss='alert'>&times;</a>" +
+                        "<strong>Fel!</strong> Antingen skrev du fel rumslösenord eller så finns inte rummet längre." +
+                        "</div>");
+                    $errorInfo.fadeTo(3000, 500).slideUp(500, function () {
+                        $($errorInfo).remove();
+                    });
+                    if (callbackErrorInfo === undefined) {
+                        $("#top_container").prepend($errorInfo);
+                    } else {
+                        callbackErrorInfo($errorInfo);
+                    }
+                }
+
+                if (callback !== undefined) {
+                    callback(result);
+                }
+            }, 'json');
+        }
+
+        function generateRooms(subject, callback) {
+            $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
+                var $allRoomsHtml = $("<div class='row'>");
+                var image_name = subject + "_room.png";
+                result.forEach(function (room) {
+                    // Create the basic info for each room:
+                    var name = room.name;
+                    var $roomHtml = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
+                    "<a href='#' class='thumbnail'>" +
+                    "<img src='" + elevutveckling.paths.images + image_name + "' alt='120x120'>" +
+                    "<div class='caption'>" +
+                    "<p class='text-center'><strong>" + name + "</strong></p>" +
                     "</div>" +
                     "</a>" +
-                    "</div>").click(function () {
-                        roomClickEvent(name);
-                    }));
+                    "</div>");
+
+                    if (isTrue(room.locked)) {
+                        // Generate a dropdown for password input
+                        $roomHtml.addClass("dropdown");
+                        $roomHtml.find("a").addClass("dropdown-toggle").attr('data-toggle', 'dropdown');
+                        $roomHtml.prepend(
+                            "<div class='dropdown-menu dropdown-menu-rooms'>" +
+                            "<h3>Rum: " + room.name + "</h2>" +
+                            "<br/>" +
+                            "<form action=''>" +
+                            "<div class='form-group'>" +
+                            "<label for='password' class='control-label'>Lösenord</label>" +
+                            "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='room_password_" + room.id + "' type='password' placeholder='Lösenord' required>" +
+                            "<div class='help-block with-errors'></div>" +
+                            "<input type='hidden' name='room_id' value='" + room.id + "'>" +
+                            "</div>" +
+                            "<div class='form-group'>" +
+                            "<button type='submit' class='btn btn-primary'>Öpnna rum</button>" +
+                            "</div>" +
+                            "</form>" +
+                            "</div>");
+
+                        // Activate the validator, that checks for correct user input
+                        $($roomHtml).find("form").validator().on('submit', function (e) {
+                            if (!e.isDefaultPrevented()) {
+                                // The input is valid, try to access the room.
+                                attemptAccessRoom(room.id, room.name, $roomHtml.find("#room_password_" + room.id).val(), function (result) {
+                                    if (result.status === 'success') {
+                                        $roomHtml.find(".dropdown-menu").toggle();
+                                    }
+                                }, function ($errorInfo) {
+                                    $roomHtml.find('.dropdown-menu-rooms').append($errorInfo);
+                                });
+                                // Remove the password
+                                $roomHtml.find("#room_password_" + room.id).val('');
+                            }
+                            return false; // return false to avoid page reload on submit
+                        });
+
+                    } else {
+                        // The room is not locked, just try to open it directly
+                        $roomHtml.click(function () {
+                            attemptAccessRoom(room.id, room.name);
+                        });
+                    }
+
+                    $allRoomsHtml.append($roomHtml);
                 });
-                callback($roomHtml);
+                callback($allRoomsHtml);
             });
+
+
         }
 
 
-        /**llbac
+        /**
          *
          * @param subject
          * @param posCallback Callback ONLY for synchronous positioning of the generated HTML
          * @param fullCallbackA Callback for the full HTML after the async requests are finished, use this for editing the response
          */
-        elevutveckling.generateSubjectBody = function (subject, posCallback, fullCakA) {
-            var $outerSkeleton = $("<div class=\"row row-offcanvas row-offcanvas-right\">");
-            var $innerSkeleton = $("<div class=\"col-xs-12 col-sm-9\">");
-            var $innerSkeletonLinks = $("<div class=\"col-xs-6 col-sm-3 sidebar-offcanvas\" id=\"sidebar\">");
+        elevutveckling.generateSubjectBody = function (subject, posCallback, fullCallbackA) {
+            var $outerSkeleton = $("<div class='row row-offcanvas row-offcanvas-right'>");
+            var $innerSkeleton = $("<div class='col-xs-12 col-sm-9'>");
+            var $innerSkeletonLinks = $("<div class='col-xs-6 col-sm-3 sidebar-offcanvas' id='sidebar'>");
 
             $outerSkeleton.append($innerSkeleton);
             $outerSkeleton.append($innerSkeletonLinks);
@@ -300,8 +385,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     $panelRoom.replaceWith(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
                 });
 
-                var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\"http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv + "\">");
-                //var $questionIFrame = $("<iframe id=\"iframe_q2a\" width=\"100%\" height=\"100%\" scrolling=\"no\" frameborder=\"0\" seamless=\"seamless\" src=\"http://" + location.hostname + "/" + "qa/matematik" + "\">");
+                var $questionIFrame = $("<iframe id='iframe_q2a' width='100%' height='100%' scrolling='no' frameborder='0' seamless='seamless' src='http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv + "'>");
 
                 $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
 
@@ -313,6 +397,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
             $(document).ajaxStop(function () {
                 if (typeof fullCallbackA != 'undefined') {
+                    // Will be called when all async calls are completed
                     fullCallbackA($outerSkeleton);
                 }
             });

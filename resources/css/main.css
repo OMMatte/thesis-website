@@ -1,6 +1,12 @@
-.row {
-  margin-top: 15px;
-  margin-bottom: 15px;
+.dropdown-menu-rooms {
+    min-width: 250px;
+    padding: 17px;
 }
+
+.row {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 
 

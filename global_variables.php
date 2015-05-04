@@ -19,8 +19,11 @@ define('PATH_FRAMEWORK_FONT', PATH_FRAMEWORKS . 'fonts/');
 define('PATH_QA', '/qa/');
 define('PATH_QA_SHARED', PATH_QA . 'shared-files/');
 
+define('PATH_SERVER', '/server/');
+
 define('PATH_FULL_PHP', PATH_ROOT . PATH_PHP);
 define('PATH_FULL_QA', PATH_ROOT . PATH_QA);
+define('PATH_FULL_SERVER', PATH_ROOT . PATH_SERVER);
 
 
 /**
@@ -30,10 +33,10 @@ define('MYSQL_HOSTNAME', '127.0.0.1');
 define('MYSQL_USERNAME', 'awzctixl_ommatte');
 define('MYSQL_PASSWORD', '123A654B789C');
 
-if (gethostname() == 'mathiass-air') {
-    define('MYSQL_DATABASE', 'awzctixl_localhost');
-} else {
+if (strpos(gethostname(), 'misshosting') !== false) {
     define('MYSQL_DATABASE', 'awzctixl_elevutveckling');
+} else {
+    define('MYSQL_DATABASE', 'awzctixl_localhost');
 }
 
 

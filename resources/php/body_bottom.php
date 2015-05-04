@@ -1,3 +1,9 @@
+<!-- Bootsrap plugin for validation forms-->
+<script src="<?php echo PATH_FRAMEWORK_JS ?>validator.min.js"></script>
+
+<!-- Plugin for hashing values -->
+<script src="<?php echo PATH_FRAMEWORK_JS ?>jquery.md5.js"></script>
+
 <!-- Main javascript functions -->
 <script type="text/javascript" src="<?php echo PATH_JS ?>main.js"></script>
 <script type="text/javascript" src="<?php echo PATH_JS ?>elevutveckling.js"></script>
@@ -10,6 +16,9 @@
 <script src="<?php echo PATH_FRAMEWORK_JS ?>bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="<?php echo PATH_FRAMEWORK_JS ?>ie10-viewport-bug-workaround.js"></script>
+
+
+
 
 
 <script id="hiddenlpsubmitdiv" style="display: none;"></script>

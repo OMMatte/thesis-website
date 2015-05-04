@@ -6,7 +6,8 @@ echo 'var paths = {';
 echo 'images: "' . PATH_IMAGES . '",';
 echo 'json: "' . PATH_JSON . '",';
 echo 'qa: "' . PATH_QA . '",';
-echo 'qaShared: "' . PATH_QA_SHARED . '"';
+echo 'qaShared: "' . PATH_QA_SHARED . '",';
+echo 'server: "' . PATH_SERVER . '"';
 echo '};';
 
 echo 'var subjects = {};';
