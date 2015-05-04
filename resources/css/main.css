@@ -1,12 +1,11 @@
-.dropdown-menu-rooms {
-    min-width: 250px;
-    padding: 17px;
+/* Change jumbotron padding, because the navigation bar affects the visuals */
+.jumbotron-elevu {
+    padding-top: 50px;
+    padding-bottom: 10px;
 }
 
-.row {
-    margin-top: 15px;
-    margin-bottom: 15px;
+.jumbotron-elevu h1 {
+    font-size: 45px;
 }
-
 
 

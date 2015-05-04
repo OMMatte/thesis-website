@@ -1,12 +1,9 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
+
+.jumbotron-elevu {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
-.jumbotron h1 {
+.jumbotron-elevu h1 {
     font-size: 45px;
-}
-.jumbotron {
-    padding: 0.5em 0.6em;
 }

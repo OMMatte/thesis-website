@@ -21,9 +21,7 @@ include(PATH_FULL_PHP . "body_bottom.php");
 ?>
 
 <script>
-    elevutveckling.generateHeaderHelper("hjalp", function (html) {
-        $('#top_container').before(html);
-    });
+    $('#top_container').before(elevutveckling.generateHeader("hjalp"));
 </script>
 
 <script>

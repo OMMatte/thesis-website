@@ -27,7 +27,7 @@
 <!-- Custom styles for this bootstrap template -->
 <link href="<?php echo PATH_CSS ?>jumbotron.css" rel="stylesheet">
 
-<link href="<?php echo PATH_CSS ?>thumbnail.css" rel="stylesheet">
+<link href="<?php echo PATH_CSS ?>subject.css" rel="stylesheet">
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

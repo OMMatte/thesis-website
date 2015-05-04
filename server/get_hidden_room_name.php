@@ -6,11 +6,11 @@ $id = $_POST['id'];
 
 if(isset($_POST['password'])) {
     $password = $_POST['password'];
-    $statement = $database->prepare("SELECT id, name, subject FROM rooms WHERE id = :id AND passcheck = :passcheck");
+    $statement = $database->prepare("SELECT id, name, subject, timestamp FROM rooms WHERE id = :id AND passcheck = :passcheck");
     $statement->bindValue(':passcheck', $password, PDO::PARAM_STR);
 
 } else {
-    $statement = $database->prepare("SELECT id, name, subject FROM rooms WHERE id = :id AND passcheck IS NULL");
+    $statement = $database->prepare("SELECT id, name, subject, timestamp FROM rooms WHERE id = :id AND passcheck IS NULL");
 
 }
 $statement->bindParam(':id', $id, PDO::PARAM_STR);
@@ -26,7 +26,8 @@ if ($results === false) {
     $json['status'] = 'success';
     $hiddenName = $results["id"] . $results['name'] . $results['subject'];
     preg_replace("/[^A-Za-z0-9]/", '', $hiddenName);
-    $json['hiddenName'] = $hiddenName;
+    $json['room'] = $results;
+    $json['room']['hiddenName'] = $hiddenName;
 }
 
 echo json_encode($json);

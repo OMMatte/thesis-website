@@ -10,7 +10,11 @@
 include(PATH_FULL_PHP . "body_top.php");
 ?>
 
+<div id="header_placement"></div>
+
 <div class="container" id="top_container">
+
+    <div id="content_placement"></div>
 
     <?php
     include(PATH_FULL_PHP . "footer.php");
@@ -21,15 +25,8 @@ include(PATH_FULL_PHP . "body_bottom.php");
 ?>
 
 <script>
-    elevutveckling.generateHeaderHelper(elevutveckling.subjects.math.eng, function (html) {
-        $('#top_container').before(html);
-    });
-</script>
-
-<script>
-    elevutveckling.generateSubjectBody(elevutveckling.subjects.math, function ($html) {
-        $("#top_container").prepend($html);
-    });
+    $('#header_placement').append(elevutveckling.generateHeader(elevutveckling.subjects.math.eng));
+    $("#content_placement").append(elevutveckling.generateSubjectContent(elevutveckling.subjects.math));
 </script>
 </body>
 </html>

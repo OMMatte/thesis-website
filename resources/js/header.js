@@ -27,9 +27,13 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
         //make menus drop automatically
         $('ul.nav li.dropdown').hover(function () {
-            $('.dropdown-menu', this).fadeIn();
+            if($(".navbar-toggle").is(':hidden')) {
+                $('.dropdown-menu', this).fadeIn();
+            }
         }, function () {
-            $('.dropdown-menu', this).fadeOut('fast');
+            $('.dropdown-menu', this).fadeOut('fast', function() {
+                $('.dropdown-menu').removeAttr('style');
+            });
         });//hover
     };
 });

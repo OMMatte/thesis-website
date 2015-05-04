@@ -27,26 +27,18 @@ include(PATH_FULL_PHP . "body_bottom.php");
 ?>
 
 <script>
-    elevutveckling.generateHeaderHelper("home", function (html) {
-        $('#top_container').before(html);
-    });
+    $('#top_container').before(elevutveckling.generateHeader("home"));
 </script>
 
 <script>
 
-    var id = '#image_row_1';
+    var $id = $('#image_row_1');
 
-    elevutveckling.genereateIHoverImageHelper("mathematics", function (htmlMath) {
-        $(id).append(htmlMath);
-    }, "/matematik");
+    $id.append(elevutveckling.generateSubjectImageButtons("mathematics", "/matematik"));
 
-    elevutveckling.genereateIHoverImageHelper("physics", function (htmlPhysics) {
-        $(id).append(htmlPhysics);
-    }, "/fysik");
+    $id.append(elevutveckling.generateSubjectImageButtons("physics", "/fysik"));
 
-    elevutveckling.genereateIHoverImageHelper("chemistry", function (htmlChemistry) {
-        $(id).append(htmlChemistry);
-    }, "/kemi");
+    $id.append(elevutveckling.generateSubjectImageButtons("chemistry", "/kemi"));
 
 </script>
 

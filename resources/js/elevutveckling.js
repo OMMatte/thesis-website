@@ -7,7 +7,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
          * @param href
          * @returns {void|*|jQuery}
          */
-        function generateIHoverImageHtml(title, description, imageUrl, href) {
+        function generateIHoverImageButtons(title, description, imageUrl, href) {
             if (typeof description === 'undefined') {
                 description = '';
             }
@@ -40,12 +40,12 @@ extendNamespace(function (elevutveckling, $, undefined) {
          * @param description
          * @returns {*|jQuery|HTMLElement}
          */
-        function generateJumbotronHeaderHtml(title, description) {
-            if (typeof description === 'undefined') {
+        function generateJumbotronHeader(title, description) {
+            if (description == undefined) {
                 description = '';
             }
 
-            var $divJumbotron = $('<div/>', {'class': "jumbotron"});
+            var $divJumbotron = $('<div/>', {'class': "jumbotron jumbotron-elevu"});
             var $divContainer = $('<div/>', {'class': "container"});
             var $h = $('<h1/>');
             var $p = $('<p>');
@@ -159,7 +159,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
         elevutveckling.retrieveJsonData = function (jsonPath, callback, jsonName) {
             return $.getJSON(jsonPath).then(function (data) {
                 var returnJson;
-                if (jsonName === undefined) {
+                if (jsonName == undefined) {
                     returnJson = data;
                 } else {
                     returnJson = data[jsonName];
@@ -171,17 +171,21 @@ extendNamespace(function (elevutveckling, $, undefined) {
 //****************** HELPER FUNCTIONS ******************
 
         /**
-         * Helper function for printing the title
+         * Function for generating the header for a page
          * @param jsonKey The json key to retrieve needed information from
+         * @param callback Callback that will contain the generated header HTML
          */
-        elevutveckling.generateHeaderHelper = function (jsonKey, callback) {
-            var $html = generateJumbotronHeaderHtml();
-            callback($html);
+        elevutveckling.generateHeader = function (jsonKey, callback) {
+            var $outerSkeleton = $('<div>');
             elevutveckling.retrieveJsonData(elevutveckling.paths.json + "titles.json", function (jsonData) {
                 var title = jsonData["title"];
                 var description = jsonData["description"];
-                $html.replaceWith(generateJumbotronHeaderHtml(title, description));
+                $outerSkeleton.append(generateJumbotronHeader(title, description));
+                if (callback != undefined) {
+                    callback($outerSkeleton);
+                }
             }, jsonKey);
+            return $outerSkeleton;
         };
 
         /**
@@ -190,24 +194,21 @@ extendNamespace(function (elevutveckling, $, undefined) {
          * @param callback The callback that will be filled with HTML. The content will change after asynch json call
          * @param href the href that the image links do, default is #
          */
-        elevutveckling.genereateIHoverImageHelper = function (jsonKey, callback, href) {
+        elevutveckling.generateSubjectImageButtons = function (jsonKey, href, callback) {
 
-            var $html = generateIHoverImageHtml();
-            callback($html);
+            var $skeleton = $('<div>');
 
             elevutveckling.retrieveJsonData(elevutveckling.paths.json + "ihover_image.json", function (jsonData) {
                 var title = jsonData["title"];
                 var description = jsonData["description"];
                 var imageUrl = elevutveckling.paths.images + jsonData["image_name"];
 
-                $html.replaceWith(generateIHoverImageHtml(title, description, imageUrl, href));
+                $skeleton.append(generateIHoverImageButtons(title, description, imageUrl, href));
             }, jsonKey);
+            return $skeleton;
         };
 
-        elevutveckling.generateHeadingPanel = function (title, $bodyHtml) {
-            if (typeof bodyHtml === 'undefined') {
-                bodyHtml = '';
-            }
+        elevutveckling.generatePanelWithHeading = function (title, $bodyContent) {
             var $html = $(
                 "<div class=\"panel panel-default\"> " +
                 "<div class=\"panel-heading\">" +
@@ -217,8 +218,9 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 "</div>" +
                 "</div>");
 
-            $html.find('.panel-body').append($bodyHtml);
-
+            if ($bodyContent != undefined) {
+                $html.find('.panel-body').append($bodyContent);
+            }
             return $html;
         };
 
@@ -245,21 +247,24 @@ extendNamespace(function (elevutveckling, $, undefined) {
             // Remove old instance
             $("#" + id).remove();
             var $roomFrame = $("<iframe width='100%' height='1000' scrolling='no' frameborder='0' src='http://www.groupworld.net/mp/parse.cgi?filename=mathjs&inst_id=1434&instance=" + instanceName + "&width=100%&height=100%&iframe=true'></iframe>");
-            var $headingWithFrame = elevutveckling.generateHeadingPanel(roomName, $roomFrame);
+            var $headingWithFrame = elevutveckling.generatePanelWithHeading(roomName, $roomFrame);
             $headingWithFrame.attr("id", id);
             return $headingWithFrame;
         }
 
 
-        function attemptAccessRoom(roomId, roomName, roomPassword, callback, callbackErrorInfo) {
+        function attemptAccessRoom(roomId, roomName, roomPassword, callback) {
             var postArray = {id: roomId};
-            if (roomPassword !== undefined) {
+            if (roomPassword != undefined) {
+                // Make sure to hash the password for some safety
                 postArray['password'] = $.md5(roomPassword);
             }
+
             $.post(elevutveckling.paths.server + "get_hidden_room_name.php", postArray, function (result) {
+                callback(result);
                 if (result.status === 'success') {
                     console.log(result);
-                    $("#top_container").prepend(getRoomInstance(roomName, result.hiddenName));
+                    result['html']['content'] = getRoomInstance(roomName, result.hiddenName);
                 }
                 else if (result.status === 'failure') {
 
@@ -272,37 +277,37 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     $errorInfo.fadeTo(3000, 500).slideUp(500, function () {
                         $($errorInfo).remove();
                     });
-                    if (callbackErrorInfo === undefined) {
-                        $("#top_container").prepend($errorInfo);
-                    } else {
-                        callbackErrorInfo($errorInfo);
-                    }
+                    result['html']['content'] = $errorInfo;
                 }
 
-                if (callback !== undefined) {
+                if (callback != undefined) {
+                    result['html']['placement'] = '#top_container';
                     callback(result);
+                } else {
+                    $(result['html']['placement']).append(result.html);
                 }
             }, 'json');
         }
 
-        function generateRooms(subject, callback) {
+        function generateRoomsAndRoomClickEvents(subject, callback) {
+            var $roomsSkeleton = $("<div>");
+            var image_name = subject + "_room.png";
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
-                var $allRoomsHtml = $("<div class='row'>");
-                var image_name = subject + "_room.png";
                 result.forEach(function (room) {
                     // Create the basic info for each room:
-                    var name = room.name;
                     var $roomHtml = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
-                    "<a href='#' class='thumbnail'>" +
+                    "<a href='#' class='thumbnail thumbnail-rooms'>" +
                     "<img src='" + elevutveckling.paths.images + image_name + "' alt='120x120'>" +
                     "<div class='caption'>" +
-                    "<p class='text-center'><strong>" + name + "</strong></p>" +
+                    "<p class='text-center'><strong>" + room.name + "</strong></p>" +
                     "</div>" +
                     "</a>" +
                     "</div>");
 
                     if (isTrue(room.locked)) {
                         // Generate a dropdown for password input
+
+                        var $passwordId = "room_password_" + room.id;
                         $roomHtml.addClass("dropdown");
                         $roomHtml.find("a").addClass("dropdown-toggle").attr('data-toggle', 'dropdown');
                         $roomHtml.prepend(
@@ -312,7 +317,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                             "<form action=''>" +
                             "<div class='form-group'>" +
                             "<label for='password' class='control-label'>Lösenord</label>" +
-                            "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='room_password_" + room.id + "' type='password' placeholder='Lösenord' required>" +
+                            "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='" + $passwordId + "' type='password' placeholder='Lösenord' required>" +
                             "<div class='help-block with-errors'></div>" +
                             "<input type='hidden' name='room_id' value='" + room.id + "'>" +
                             "</div>" +
@@ -324,83 +329,109 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
                         // Activate the validator, that checks for correct user input
                         $($roomHtml).find("form").validator().on('submit', function (e) {
+                            // Clear password after submit
+                            $roomHtml.find("#" + $passwordId).val('');
+
                             if (!e.isDefaultPrevented()) {
                                 // The input is valid, try to access the room.
-                                attemptAccessRoom(room.id, room.name, $roomHtml.find("#room_password_" + room.id).val(), function (result) {
+                                attemptAccessRoom(room.id, room.name, $roomHtml.find("#" + $passwordId).val(), function (result) {
                                     if (result.status === 'success') {
+                                        // Use standard placement for generated html
+                                        $(result['html']['placement']).append(result.html);
+                                        // Remove the room dropdown
                                         $roomHtml.find(".dropdown-menu").toggle();
+                                    } else {
+                                        // Special placement for error code
+                                        roomHtml.find('.dropdown-menu-rooms').append(result.html);
                                     }
-                                }, function ($errorInfo) {
-                                    $roomHtml.find('.dropdown-menu-rooms').append($errorInfo);
                                 });
-                                // Remove the password
-                                $roomHtml.find("#room_password_" + room.id).val('');
                             }
                             return false; // return false to avoid page reload on submit
                         });
 
                     } else {
-                        // The room is not locked, just try to open it directly
+                        // The room is not locked, just try to open it directly when clicked
                         $roomHtml.click(function () {
                             attemptAccessRoom(room.id, room.name);
                         });
                     }
 
-                    $allRoomsHtml.append($roomHtml);
+                    $roomsSkeleton.append($roomHtml);
                 });
-                callback($allRoomsHtml);
+
+
+                //$roomsSkeleton.append("test");
+                callback($roomsSkeleton);
             });
-
-
+            return $roomsSkeleton;
         }
 
 
         /**
-         *
-         * @param subject
+         * Will generate the entire content for a subject page.
+         * @param subject The subject, must be an array containing {eng, sv} TODO: sv should be in a translation file instead
          * @param posCallback Callback ONLY for synchronous positioning of the generated HTML
-         * @param fullCallbackA Callback for the full HTML after the async requests are finished, use this for editing the response
+         * @param callback Callback for the generated code. Note that it returns before all async calls are completed. Meaning that it might change its content after beeing returned
          */
-        elevutveckling.generateSubjectBody = function (subject, posCallback, fullCallbackA) {
-            var $outerSkeleton = $("<div class='row row-offcanvas row-offcanvas-right'>");
-            var $innerSkeleton = $("<div class='col-xs-12 col-sm-9'>");
-            var $innerSkeletonLinks = $("<div class='col-xs-6 col-sm-3 sidebar-offcanvas' id='sidebar'>");
+        elevutveckling.generateSubjectContent = function (subject, callback) {
+            // Create the outer divs holding the subject body
+            var $outerSkeleton = $('<div class="row row-offcanvas row-offcanvas-right">');
+            var $innerSkeletonCenter = $('<div class="col-xs-12 col-sm-9">');
+            var $innerSkeletonRight = $('<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">');
+            $outerSkeleton.append($innerSkeletonCenter);
+            $outerSkeleton.append($innerSkeletonRight);
 
-            $outerSkeleton.append($innerSkeleton);
-            $outerSkeleton.append($innerSkeletonLinks);
+            var $room_placement = $('<div id="room_placement">');
+            var $q2a_placement = $('<div id="q2a_placement">');
+            $innerSkeletonCenter.append($room_placement);
+            $innerSkeletonCenter.append($q2a_placement);
 
-            posCallback($outerSkeleton);
+            var $link_placement = $('<div id="links_placement">');
+            $innerSkeletonRight.append($link_placement);
 
             elevutveckling.retrieveJsonData(elevutveckling.paths.json + "subjects.json", function (jsonData) {
 
+                // This is in order to make sure that all ajax-calls within this function are done when calling the callback
+                var callbackCounter = 0;
+                var checkAndIncreaseCallback = function () {
+                    callbackCounter++;
+                    if (callbackCounter === 2 && callback != undefined) {
+                        callback($outerSkeleton);
+                    }
+                };
+
+                // Get the title information for the different main parts of the page
                 var linkTitle = jsonData.links.title;
-                var questionTitle = jsonData.question_and_answers.title;
+                var q2aTitle = jsonData.question_and_answers.title;
                 var roomsTitle = jsonData.virtual_rooms.title;
 
-                // Variable in order to make rooms appear before qa
-                var $panelRoom = elevutveckling.generateHeadingPanel(roomsTitle);
-                $innerSkeleton.append($panelRoom);
-
-                generateRooms(subject.eng, function ($rooms) {
-                    $panelRoom.replaceWith(elevutveckling.generateHeadingPanel(roomsTitle, $rooms));
-                });
-
-                var $questionIFrame = $("<iframe id='iframe_q2a' width='100%' height='100%' scrolling='no' frameborder='0' seamless='seamless' src='http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv + "'>");
-
-                $innerSkeleton.append(elevutveckling.generateHeadingPanel(questionTitle, $questionIFrame));
-
-                elevutveckling.retrieveJsonData(elevutveckling.paths.json + "links.json", function (jsonData) {
-                    var linkList = jsonData["mathematics"];
-                    $innerSkeletonLinks.append(elevutveckling.generateListGroup(linkTitle, linkList));
-                });
-            });
-
-            $(document).ajaxStop(function () {
-                if (typeof fullCallbackA != 'undefined') {
-                    // Will be called when all async calls are completed
-                    fullCallbackA($outerSkeleton);
+                {
+                    generateRoomsAndRoomClickEvents(subject.eng, function ($rooms) {
+                        // We have generated the rooms, now add them with a panel
+                        $room_placement.append(elevutveckling.generatePanelWithHeading(roomsTitle, $rooms));
+                        checkAndIncreaseCallback();
+                    });
                 }
+
+                {
+                    var $q2aIFrame = $('<iframe id="iframe_q2a" width="100%" height="100%" scrolling="no" frameborder="0">');
+                    $q2aIFrame.attr('src', "http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv);
+
+                    // Set the question2answer with with the heading
+                    $q2a_placement.append(elevutveckling.generatePanelWithHeading(q2aTitle, $q2aIFrame));
+                }
+
+
+                {
+                    elevutveckling.retrieveJsonData(elevutveckling.paths.json + "links.json", function (jsonData) {
+                        var linkList = jsonData["mathematics"];
+                        $link_placement.append(elevutveckling.generateListGroup(linkTitle, linkList));
+                        checkAndIncreaseCallback();
+                    });
+                }
+
             });
+            return $outerSkeleton;
         };
     }
 );

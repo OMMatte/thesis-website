@@ -1,0 +1,15 @@
+/*.thumbnail {
+    border: none;
+    box-shadow: none;
+}*/
+
+/* To avoid the room images becoming too large or too small */
+.thumbnail-rooms img {
+    min-height: 50px;
+    max-height: 150px
+}
+
+.dropdown-menu-rooms {
+    min-width: 250px;
+    padding: 17px;
+}
