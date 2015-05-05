@@ -5,9 +5,7 @@
     include(PATH_FULL_PHP . "head.php");
     ?>
 </head>
-
 <body id="body_physics">
-
 <?php
 include(PATH_FULL_PHP . "body_top.php");
 ?>
@@ -15,6 +13,8 @@ include(PATH_FULL_PHP . "body_top.php");
 <div id="header_placement"></div>
 
 <div class="container" id="top_container">
+
+    <div id="opened_room_placement"></div>
 
     <div id="content_placement"></div>
 
@@ -30,4 +30,5 @@ include(PATH_FULL_PHP . "body_bottom.php");
     $('#header_placement').append(elevutveckling.generateHeader(elevutveckling.subjects.phys.eng));
     $("#content_placement").append(elevutveckling.generateSubjectContent(elevutveckling.subjects.phys));
 </script>
+</body>
 </html>

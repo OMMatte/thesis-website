@@ -241,7 +241,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return (value === 'true' || value === 1 || value === true);
         }
 
-
         function getRoomInstance(roomName, instanceName) {
             var id = "groupworld_frame";
             // Remove old instance
@@ -260,50 +259,49 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 postArray['password'] = $.md5(roomPassword);
             }
 
+            console.log(roomPassword);
+            console.log(postArray['password']);
+            var $skeleton = $('<div>');
             $.post(elevutveckling.paths.server + "get_hidden_room_name.php", postArray, function (result) {
-                callback(result);
                 if (result.status === 'success') {
-                    console.log(result);
-                    result['html']['content'] = getRoomInstance(roomName, result.hiddenName);
+                    $skeleton.append(getRoomInstance(roomName, result.hiddenName));
                 }
                 else if (result.status === 'failure') {
-
                     // Show error info
                     var $errorInfo = $(
                         "<div class='alert alert-danger'>" +
-                        "<a href='#' class='close' data-dismiss='alert'>&times;</a>" +
                         "<strong>Fel!</strong> Antingen skrev du fel rumslösenord eller så finns inte rummet längre." +
                         "</div>");
-                    $errorInfo.fadeTo(3000, 500).slideUp(500, function () {
-                        $($errorInfo).remove();
+                    $skeleton.fadeTo(3000, 500).slideUp(500, function () {
+                        $($skeleton).remove();
                     });
-                    result['html']['content'] = $errorInfo;
+                    $skeleton.append($errorInfo);
                 }
 
                 if (callback != undefined) {
-                    result['html']['placement'] = '#top_container';
-                    callback(result);
-                } else {
-                    $(result['html']['placement']).append(result.html);
+                    callback(result, $skeleton);
                 }
             }, 'json');
+            return $skeleton;
         }
 
         function generateRoomsAndRoomClickEvents(subject, callback) {
             var $roomsSkeleton = $("<div>");
-            var image_name = subject + "_room.png";
+            var imageName = subject + "_room.png";
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
                 result.forEach(function (room) {
                     // Create the basic info for each room:
                     var $roomHtml = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
                     "<a href='#' class='thumbnail thumbnail-rooms'>" +
-                    "<img src='" + elevutveckling.paths.images + image_name + "' alt='120x120'>" +
+                    "<img src='" + elevutveckling.paths.images + imageName + "' alt='120x120'>" +
                     "<div class='caption'>" +
                     "<p class='text-center'><strong>" + room.name + "</strong></p>" +
                     "</div>" +
                     "</a>" +
                     "</div>");
 
+
+                    var $openedRoomPlacement = $('#opened_room_placement');
                     if (isTrue(room.locked)) {
                         // Generate a dropdown for password input
 
@@ -329,22 +327,23 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
                         // Activate the validator, that checks for correct user input
                         $($roomHtml).find("form").validator().on('submit', function (e) {
-                            // Clear password after submit
-                            $roomHtml.find("#" + $passwordId).val('');
+
 
                             if (!e.isDefaultPrevented()) {
                                 // The input is valid, try to access the room.
-                                attemptAccessRoom(room.id, room.name, $roomHtml.find("#" + $passwordId).val(), function (result) {
+                                attemptAccessRoom(room.id, room.name, $roomHtml.find("#" + $passwordId).val(), function (result, content) {
                                     if (result.status === 'success') {
                                         // Use standard placement for generated html
-                                        $(result['html']['placement']).append(result.html);
+                                        $openedRoomPlacement.append(content);
                                         // Remove the room dropdown
                                         $roomHtml.find(".dropdown-menu").toggle();
                                     } else {
                                         // Special placement for error code
-                                        roomHtml.find('.dropdown-menu-rooms').append(result.html);
+                                        $roomHtml.find('.dropdown-menu-rooms').append(content);
                                     }
                                 });
+                                // Clear password after submit
+                                $roomHtml.find("#" + $passwordId).val('');
                             }
                             return false; // return false to avoid page reload on submit
                         });
@@ -352,7 +351,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     } else {
                         // The room is not locked, just try to open it directly when clicked
                         $roomHtml.click(function () {
-                            attemptAccessRoom(room.id, room.name);
+                            $openedRoomPlacement.append(attemptAccessRoom(room.id, room.name));
                         });
                     }
 
@@ -381,10 +380,10 @@ extendNamespace(function (elevutveckling, $, undefined) {
             $outerSkeleton.append($innerSkeletonCenter);
             $outerSkeleton.append($innerSkeletonRight);
 
-            var $room_placement = $('<div id="room_placement">');
-            var $q2a_placement = $('<div id="q2a_placement">');
-            $innerSkeletonCenter.append($room_placement);
-            $innerSkeletonCenter.append($q2a_placement);
+            var $roomPlacement = $('<div id="room_placement">');
+            var $q2aPlacement = $('<div id="q2a_placement">');
+            $innerSkeletonCenter.append($roomPlacement);
+            $innerSkeletonCenter.append($q2aPlacement);
 
             var $link_placement = $('<div id="links_placement">');
             $innerSkeletonRight.append($link_placement);
@@ -408,7 +407,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 {
                     generateRoomsAndRoomClickEvents(subject.eng, function ($rooms) {
                         // We have generated the rooms, now add them with a panel
-                        $room_placement.append(elevutveckling.generatePanelWithHeading(roomsTitle, $rooms));
+                        $roomPlacement.append(elevutveckling.generatePanelWithHeading(roomsTitle, $rooms));
                         checkAndIncreaseCallback();
                     });
                 }
@@ -418,7 +417,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     $q2aIFrame.attr('src', "http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv);
 
                     // Set the question2answer with with the heading
-                    $q2a_placement.append(elevutveckling.generatePanelWithHeading(q2aTitle, $q2aIFrame));
+                    $q2aPlacement.append(elevutveckling.generatePanelWithHeading(q2aTitle, $q2aIFrame));
                 }
 
 

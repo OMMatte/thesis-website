@@ -14,6 +14,8 @@ include(PATH_FULL_PHP . "body_top.php");
 
 <div class="container" id="top_container">
 
+    <div id="opened_room_placement"></div>
+
     <div id="content_placement"></div>
 
     <?php
