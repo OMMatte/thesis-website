@@ -287,18 +287,31 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
         function generateRoomsAndRoomClickEvents(subject, callback) {
             var $roomsSkeleton = $("<div>");
-            var imageName = subject + "_room.png";
+
+            function generateBasicRoomContent(roomName) {
+                var imageName = subject + "_room.png";
+                return $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
+                "<a href='#' class='thumbnail thumbnail-rooms'>" +
+                "<img src='" + elevutveckling.paths.images + imageName + "' alt='120x120'>" +
+                "<div class='caption'>" +
+                "<p class='text-center'><strong>" + roomName + "</strong></p>" +
+                "</div>" +
+                "</a>" +
+                "</div>");
+            }
+
+            function addDropdown($room, content) {
+                $room.addClass("dropdown");
+                $room.find("a").addClass("dropdown-toggle").attr('data-toggle', 'dropdown');
+                var $dropdownMenu = $("<div class='dropdown-menu dropdown-menu-rooms'></div>");
+                $dropdownMenu.append(content);
+                $room.prepend($dropdownMenu);
+            }
+
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
                 result.forEach(function (room) {
                     // Create the basic info for each room:
-                    var $roomHtml = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
-                    "<a href='#' class='thumbnail thumbnail-rooms'>" +
-                    "<img src='" + elevutveckling.paths.images + imageName + "' alt='120x120'>" +
-                    "<div class='caption'>" +
-                    "<p class='text-center'><strong>" + room.name + "</strong></p>" +
-                    "</div>" +
-                    "</a>" +
-                    "</div>");
+                    var $roomHtml = generateBasicRoomContent(room.name);
 
 
                     var $openedRoomPlacement = $('#opened_room_placement');
@@ -306,11 +319,8 @@ extendNamespace(function (elevutveckling, $, undefined) {
                         // Generate a dropdown for password input
 
                         var $passwordId = "room_password_" + room.id;
-                        $roomHtml.addClass("dropdown");
-                        $roomHtml.find("a").addClass("dropdown-toggle").attr('data-toggle', 'dropdown');
-                        $roomHtml.prepend(
-                            "<div class='dropdown-menu dropdown-menu-rooms'>" +
-                            "<h3>Rum: " + room.name + "</h2>" +
+                        var $dropdownContent = $(
+                            "<h3>Rum: " + room.name + "</h3>" +
                             "<br/>" +
                             "<form action=''>" +
                             "<div class='form-group'>" +
@@ -322,7 +332,15 @@ extendNamespace(function (elevutveckling, $, undefined) {
                             "<div class='form-group'>" +
                             "<button type='submit' class='btn btn-primary'>Öpnna rum</button>" +
                             "</div>" +
-                            "</form>" +
+                            "</form>");
+
+                        addDropdown($roomHtml, $dropdownContent);
+
+                        $roomHtml.addClass("dropdown");
+                        $roomHtml.find("a").addClass("dropdown-toggle").attr('data-toggle', 'dropdown');
+                        $roomHtml.prepend(
+                            "<div class='dropdown-menu dropdown-menu-rooms'>" +
+
                             "</div>");
 
                         // Activate the validator, that checks for correct user input
@@ -359,7 +377,48 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 });
 
 
-                //$roomsSkeleton.append("test");
+                var $createNewRoom = generateBasicRoomContent('Nytt Rum');
+                $createNewRoom.addClass('create-new-room');
+                $createNewRoom.find('p').addClass('text-primary');
+                var $dropdownContent = $("<h3>Skapa Nytt Rum</h3>" +
+                    "<br/>" +
+                    "<form action=''>" +
+                    "<div class='form-group'>" +
+                    "<label for='room_name' class='control-label'>Namn</label>" +
+                    "<input data-error='Minst 4 och max 15 tecken' class='form-control' data-minlength='4' data-maxlength='15' name='room_name' id='create_new_room_name' type='text' placeholder='Namn på rummet' required>" +
+                    "</div>" +
+                    "<div class='form-group'>" +
+                    "<div class='checkbox'>" +
+                    "<label>" +
+                    "<input type='checkbox' id='create_new_room_locked'>" +
+                    "Lösenord" +
+                    "</label>" +
+                    "</div>" +
+                    "</div>" +
+                    "<div class='form-group' id='create_new_room_password_form'>" +
+                    "<label for='password' class='control-label'>Lösenord</label>" +
+                    "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='" + 'test' + "' type='password' placeholder='Lösenord' required>" +
+                    "<div class='help-block with-errors'></div>" +
+                    "</div>" +
+                    "<div class='form-group'>" +
+                    "<button type='submit' class='btn btn-primary'>Öpnna rum</button>" +
+                    "</div>" +
+                    "</form>");
+
+                var passwordForm = $dropdownContent.find('#create_new_room_password_form');
+                passwordForm.hide();
+                $dropdownContent.find('#create_new_room_locked').change(function(){
+                    if(this.checked) {
+                        passwordForm.show();
+                    } else {
+                        passwordForm.hide();
+                    }
+                });
+
+                addDropdown($createNewRoom, $dropdownContent);
+
+                $roomsSkeleton.append($createNewRoom);
+
                 callback($roomsSkeleton);
             });
             return $roomsSkeleton;

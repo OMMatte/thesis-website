@@ -13,3 +13,7 @@
     min-width: 250px;
     padding: 17px;
 }
+
+.create-new-room img {
+    opacity: 0.4;
+}
