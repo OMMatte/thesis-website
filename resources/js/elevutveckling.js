@@ -259,8 +259,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 postArray['password'] = $.md5(roomPassword);
             }
 
-            console.log(roomPassword);
-            console.log(postArray['password']);
             var $skeleton = $('<div>');
             $.post(elevutveckling.paths.server + "get_hidden_room_name.php", postArray, function (result) {
                 if (result.status === 'success') {
@@ -285,8 +283,38 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return $skeleton;
         }
 
+        function attemptCreateRoom(roomName, roomPassword, subject, callback) {
+            var postArray = {name: roomName, subject: subject};
+
+            if (roomPassword != undefined) {
+                // Make sure to hash the password for some safety
+                postArray['password'] = $.md5(roomPassword);
+            }
+
+            var $skeleton = $('<div>');
+            $.post(elevutveckling.paths.server + "create_new_room.php", postArray, function (result) {
+                console.log(result);
+                if (result.status === 'failure') {
+                    console.log(result);
+                    var $errorInfo = $(
+                        "<div class='alert alert-danger'>" +
+                        "<strong>Fel!</strong> Skapandet av rum misslyckades. Kontrollera att rumsnamnet inte redan finns och försök igen." +
+                        "</div>");
+                    $skeleton.fadeTo(3000, 500).slideUp(500, function () {
+                        $($skeleton).remove();
+                    });
+                    $skeleton.append($errorInfo);
+                }
+
+                if (callback != undefined) {
+                    callback(result, $skeleton);
+                }
+            }, 'json');
+            return $skeleton;
+        }
+
         function generateRoomsAndRoomClickEvents(subject, callback) {
-            var $roomsSkeleton = $("<div>");
+            var $roomsSkeleton = $('<div>');
 
             function generateBasicRoomContent(roomName) {
                 var imageName = subject + "_room.png";
@@ -346,7 +374,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                         // Activate the validator, that checks for correct user input
                         $($roomHtml).find("form").validator().on('submit', function (e) {
 
-
                             if (!e.isDefaultPrevented()) {
                                 // The input is valid, try to access the room.
                                 attemptAccessRoom(room.id, room.name, $roomHtml.find("#" + $passwordId).val(), function (result, content) {
@@ -381,34 +408,35 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 $createNewRoom.addClass('create-new-room');
                 $createNewRoom.find('p').addClass('text-primary');
                 var $dropdownContent = $("<h3>Skapa Nytt Rum</h3>" +
-                    "<br/>" +
-                    "<form action=''>" +
-                    "<div class='form-group'>" +
-                    "<label for='room_name' class='control-label'>Namn</label>" +
-                    "<input data-error='Minst 4 och max 15 tecken' class='form-control' data-minlength='4' data-maxlength='15' name='room_name' id='create_new_room_name' type='text' placeholder='Namn på rummet' required>" +
-                    "</div>" +
-                    "<div class='form-group'>" +
-                    "<div class='checkbox'>" +
-                    "<label>" +
-                    "<input type='checkbox' id='create_new_room_locked'>" +
-                    "Lösenord" +
-                    "</label>" +
-                    "</div>" +
-                    "</div>" +
-                    "<div class='form-group' id='create_new_room_password_form'>" +
-                    "<label for='password' class='control-label'>Lösenord</label>" +
-                    "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='" + 'test' + "' type='password' placeholder='Lösenord' required>" +
-                    "<div class='help-block with-errors'></div>" +
-                    "</div>" +
-                    "<div class='form-group'>" +
-                    "<button type='submit' class='btn btn-primary'>Öpnna rum</button>" +
-                    "</div>" +
-                    "</form>");
+                "<br/>" +
+                "<form action=''>" +
+                "<div class='form-group'>" +
+                "<label for='room_name' class='control-label'>Namn</label>" +
+                "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' maxlength='15' name='room_name' id='create_new_room_name' type='text' placeholder='Namn på rummet' required>" +
+                "<div class='help-block with-errors'></div>" +
+                "</div>" +
+                "<div class='form-group'>" +
+                "<div class='checkbox'>" +
+                "<label>" +
+                "<input type='checkbox' id='create_new_room_locked'>" +
+                "Lösenord" +
+                "</label>" +
+                "</div>" +
+                "</div>" +
+                "<div class='form-group' id='create_new_room_password_form'>" +
+                "<label for='password' class='control-label'>Lösenord</label>" +
+                "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='create_new_room_password' type='password' placeholder='Lösenord' required>" +
+                "<div class='help-block with-errors'></div>" +
+                "</div>" +
+                "<div class='form-group'>" +
+                "<button type='submit' class='btn btn-primary'>Öpnna rum</button>" +
+                "</div>" +
+                "</form>");
 
                 var passwordForm = $dropdownContent.find('#create_new_room_password_form');
                 passwordForm.hide();
-                $dropdownContent.find('#create_new_room_locked').change(function(){
-                    if(this.checked) {
+                $dropdownContent.find('#create_new_room_locked').change(function () {
+                    if (this.checked) {
                         passwordForm.show();
                     } else {
                         passwordForm.hide();
@@ -416,6 +444,26 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 });
 
                 addDropdown($createNewRoom, $dropdownContent);
+
+                $($createNewRoom).find("form").validator().on('submit', function (e) {
+                    if (!e.isDefaultPrevented()) {
+                        var roomName =  $('#create_new_room_name').val();
+                        var roomPassword = $('#create_new_room_locked').is(':checked') ? $('#create_new_room_password').val() : undefined;
+                        attemptCreateRoom(roomName, roomPassword, subject, function(result, content) {
+                            if (result.status === 'success') {
+                                location.reload();
+                            } else {
+                                console.log(content);
+                                // Special placement for error code
+                                $createNewRoom.find('.dropdown-menu-rooms').append(content);
+                            }
+                        });
+
+                        // Clear password after submit
+                        $createNewRoom.find("#create_new_room_password").val('');
+                    }
+                    return false; // return false to avoid page reload on submit
+                });
 
                 $roomsSkeleton.append($createNewRoom);
 
