@@ -39,6 +39,8 @@ if (strpos(gethostname(), 'misshosting') !== false) {
     define('MYSQL_DATABASE', 'awzctixl_localhost');
 }
 
+define('ROOM_CREATION_REGEX', '^[a-zA-Z0-9\. -:_]{4,15}$');
+
 
 /**
  * GENERAL CONSTANTS

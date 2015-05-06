@@ -18,9 +18,6 @@
 <script src="<?php echo PATH_FRAMEWORK_JS ?>ie10-viewport-bug-workaround.js"></script>
 
 
-
-
-
 <script id="hiddenlpsubmitdiv" style="display: none;"></script>
 <script>try {
         for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {

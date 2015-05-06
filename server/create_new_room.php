@@ -2,6 +2,8 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
 include_once(PATH_FULL_SERVER . 'open_connection.php');
 
+define('NEW_ROOM_TIME_LIMIT', 60*60*5);
+
 $name = $_POST['name'];
 $subject = $_POST['subject'];
 
@@ -10,15 +12,18 @@ $subject = $_POST['subject'];
 if (isset($_POST['password'])) {
 
     $password = $_POST['password'];
-    $statement = $database->prepare("INSERT INTO rooms (subject,name,passcheck) VALUES (:subject,:name,:passcheck)");
+    $statement = $database->prepare("INSERT INTO rooms (subject,name,passcheck,closing_time) VALUES (:subject,:name,:passcheck,:closing_time)");
     $statement->bindParam(':passcheck', $password, PDO::PARAM_STR);
 
 } else {
-    $statement = $database->prepare("INSERT INTO rooms (subject,name) VALUES (:subject,:name)");
+    $statement = $database->prepare("INSERT INTO rooms (subject,name,closing_time) VALUES (:subject,:name,:closing_time)");
 }
 
 $statement->bindParam(':subject', $subject, PDO::PARAM_STR);
 $statement->bindParam(':name', $name, PDO::PARAM_STR);
+
+$date = date('Y-m-d H:i:s', time() + NEW_ROOM_TIME_LIMIT);
+$statement->bindParam(':closing_time', $date, PDO::PARAM_STR);
 
 $json = array();
 try {

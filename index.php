@@ -10,6 +10,7 @@
 
 
 <?php
+
 include(PATH_FULL_PHP . "body_top.php");
 ?>
 

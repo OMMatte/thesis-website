@@ -293,9 +293,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
             var $skeleton = $('<div>');
             $.post(elevutveckling.paths.server + "create_new_room.php", postArray, function (result) {
-                console.log(result);
                 if (result.status === 'failure') {
-                    console.log(result);
                     var $errorInfo = $(
                         "<div class='alert alert-danger'>" +
                         "<strong>Fel!</strong> Skapandet av rum misslyckades. Kontrollera att rumsnamnet inte redan finns och försök igen." +
@@ -313,19 +311,69 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return $skeleton;
         }
 
+
         function generateRoomsAndRoomClickEvents(subject, callback) {
             var $roomsSkeleton = $('<div>');
 
-            function generateBasicRoomContent(roomName) {
+            function generateBasicRoomContent(roomName, closing_time) {
                 var imageName = subject + "_room.png";
-                return $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
+                var $content = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
                 "<a href='#' class='thumbnail thumbnail-rooms'>" +
                 "<img src='" + elevutveckling.paths.images + imageName + "' alt='120x120'>" +
                 "<div class='caption'>" +
                 "<p class='text-center'><strong>" + roomName + "</strong></p>" +
+                "<div class='text-center' id='countdown_timer_" + roomName + "'> </div>" +
                 "</div>" +
                 "</a>" +
                 "</div>");
+
+                // update the tag with id "countdown" every 1 second
+                function countdown(seconds) {
+                    // find the amount of "seconds" between now and target
+                    var current_date = new Date().getTime();
+
+                    // do some time calculations
+                    var days = parseInt(seconds / 86400);
+                    seconds = seconds % 86400;
+
+                    var hours = parseInt(seconds / 3600);
+                    seconds = seconds % 3600;
+
+                    var minutes = parseInt(seconds / 60);
+                    var seconds = parseInt(seconds % 60);
+
+                    var countdownString = "";
+                    if (days > 0) {
+                        countdownString += '<span class="days">' + days + ':</span>';
+                    }
+                    if (hours > 0) {
+                        countdownString += '<span class="hours">' + hours + ':</span>';
+                    }
+                    if (minutes > 0) {
+                        countdownString += ' <span class="minutes">' + minutes + ':</span>';
+                    }
+                    countdownString += '<span class="seconds">' + seconds + '</span>';
+
+                    return $(countdownString);
+                }
+
+                if (closing_time != undefined) {
+
+                    function countdownHandler() {
+                        var current_date = new Date().getTime();
+                        var end_date = new Date(closing_time);
+                        var seconds = (end_date - current_date) / 1000;
+                        if(seconds < 0) {
+                            $content.hide();
+                        }
+                        $content.find('#countdown_timer_' + roomName).html(countdown(seconds));
+                    }
+
+                    countdownHandler();
+                    setInterval(countdownHandler, 1000);
+
+                }
+                return $content;
             }
 
             function addDropdown($room, content) {
@@ -339,7 +387,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
                 result.forEach(function (room) {
                     // Create the basic info for each room:
-                    var $roomHtml = generateBasicRoomContent(room.name);
+                    var $roomHtml = generateBasicRoomContent(room.name, room.closing_time);
 
 
                     var $openedRoomPlacement = $('#opened_room_placement');
@@ -447,13 +495,12 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
                 $($createNewRoom).find("form").validator().on('submit', function (e) {
                     if (!e.isDefaultPrevented()) {
-                        var roomName =  $('#create_new_room_name').val();
+                        var roomName = $('#create_new_room_name').val();
                         var roomPassword = $('#create_new_room_locked').is(':checked') ? $('#create_new_room_password').val() : undefined;
-                        attemptCreateRoom(roomName, roomPassword, subject, function(result, content) {
+                        attemptCreateRoom(roomName, roomPassword, subject, function (result, content) {
                             if (result.status === 'success') {
                                 location.reload();
                             } else {
-                                console.log(content);
                                 // Special placement for error code
                                 $createNewRoom.find('.dropdown-menu-rooms').append(content);
                             }
