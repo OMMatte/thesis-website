@@ -39,7 +39,9 @@ if (strpos(gethostname(), 'misshosting') !== false) {
     define('MYSQL_DATABASE', 'awzctixl_localhost');
 }
 
-define('ROOM_CREATION_REGEX', '^[a-zA-Z0-9\. -:_]{4,15}$');
+define('ROOM_CREATION_NAME_MIN', 4);
+define('ROOM_CREATION_NAME_MAX', 15);
+define('ROOM_CREATION_REGEX', '^[a-zA-Z0-9 _:;.,-]{' . ROOM_CREATION_NAME_MIN . ',' . ROOM_CREATION_NAME_MAX . '}$');
 
 
 /**

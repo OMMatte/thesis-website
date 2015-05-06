@@ -6,11 +6,11 @@ $id = $_POST['id'];
 
 if(isset($_POST['password'])) {
     $password = $_POST['password'];
-    $statement = $database->prepare("SELECT id, name, subject, timestamp FROM rooms WHERE id = :id AND passcheck = :passcheck");
+    $statement = $database->prepare("SELECT id, name, subject, closing_time FROM rooms WHERE id = :id AND passcheck = :passcheck");
     $statement->bindValue(':passcheck', $password, PDO::PARAM_STR);
 
 } else {
-    $statement = $database->prepare("SELECT id, name, subject, timestamp FROM rooms WHERE id = :id AND passcheck IS NULL");
+    $statement = $database->prepare("SELECT id, name, subject, closing_time FROM rooms WHERE id = :id AND passcheck IS NULL");
 
 }
 $statement->bindParam(':id', $id, PDO::PARAM_STR);

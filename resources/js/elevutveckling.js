@@ -261,6 +261,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
             var $skeleton = $('<div>');
             $.post(elevutveckling.paths.server + "get_hidden_room_name.php", postArray, function (result) {
+                console.log(result)
                 if (result.status === 'success') {
                     $skeleton.append(getRoomInstance(roomName, result.hiddenName));
                 }
@@ -364,7 +365,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                         var current_date = new Date().getTime();
                         var end_date = new Date(closing_time);
                         var seconds = (end_date - current_date) / 1000;
-                        if(seconds < 0) {
+                        if (seconds < 0) {
                             $content.hide();
                         }
                         $content.find('#countdown_timer_' + roomId).html(countdown(seconds));
@@ -445,6 +446,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     } else {
                         // The room is not locked, just try to open it directly when clicked
                         $roomHtml.click(function () {
+                            console.log('BAJS');
                             $openedRoomPlacement.append(attemptAccessRoom(room.id, room.name));
                         });
                     }
@@ -456,13 +458,20 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var $createNewRoom = generateBasicRoomContent('Nytt Rum');
                 $createNewRoom.addClass('create-new-room');
                 $createNewRoom.find('p').addClass('text-primary');
+
+
+
+                var nameMin = elevutveckling.form.newRoom.name.min;
+                var nameMax = elevutveckling.form.newRoom.name.max;
+                var nameRegex = elevutveckling.form.newRoom.name.regex;
+                var passwordMin = 4;
                 var $dropdownContent = $("<h3>Skapa Nytt Rum</h3>" +
                 "<br/>" +
                 "<form action=''>" +
                 "<div class='form-group'>" +
                 "<label for='room_name' class='control-label'>Namn</label>" +
-                "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' maxlength='15' name='room_name' id='create_new_room_name' type='text' placeholder='Namn på rummet' required>" +
-                "<div class='help-block with-errors'></div>" +
+                "<input data-error='Minst " + nameMin + " bokstäver, siffror, - och _' class='form-control' maxlength='" + nameMax + "' pattern='" + nameRegex + "' name='room_name' id='create_new_room_name' type='text' placeholder='Namn på rummet' required>" +
+                "<div class='help-block with-errors'>Minst " + nameMin + " bokstäver, siffror och -_:;,.</div>" +
                 "</div>" +
                 "<div class='form-group'>" +
                 "<div class='checkbox'>" +
@@ -474,7 +483,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 "</div>" +
                 "<div class='form-group' id='create_new_room_password_form'>" +
                 "<label for='password' class='control-label'>Lösenord</label>" +
-                "<input data-error='Minst 4 tecken' class='form-control' data-minlength='4' name='password' id='create_new_room_password' type='password' placeholder='Lösenord' required>" +
+                "<input data-error='Minst " + passwordMin + " tecken' class='form-control' data-minlength='" + passwordMin + "' name='password' id='create_new_room_password' type='password' placeholder='Lösenord' required>" +
                 "<div class='help-block with-errors'></div>" +
                 "</div>" +
                 "<div class='form-group'>" +
@@ -515,9 +524,9 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
                 $innerSkeleton.append($createNewRoom);
 
-                $(window).load(function() {
+                $(window).load(function () {
                     console.log("TEST");
-                console.log($innerSkeleton.find(".thumbnail-rooms").height());
+                    console.log($innerSkeleton.find(".thumbnail-rooms").height());
                     var heights = $innerSkeleton.find(".thumbnail-rooms").find("a").map(function () {
                             return $(this).height();
                         }).get(),
