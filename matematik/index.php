@@ -29,6 +29,7 @@ include(PATH_FULL_PHP . "body_bottom.php");
 <script>
     $('#header_placement').append(elevutveckling.generateHeader(elevutveckling.subjects.math.eng));
     $("#content_placement").append(elevutveckling.generateSubjectContent(elevutveckling.subjects.math));
+
 </script>
 </body>
 </html>

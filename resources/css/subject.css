@@ -4,9 +4,18 @@
 }*/
 
 /* To avoid the room images becoming too large or too small */
+
+.thumbnail-rooms {
+    position: relative;
+    height: 190px;
+}
+
 .thumbnail-rooms img {
-    min-height: 50px;
-    max-height: 150px
+    height: 100px;
+}
+
+.thumbnail-rooms p {
+    word-wrap: break-word;
 }
 
 .dropdown-menu-rooms {
@@ -15,5 +24,14 @@
 }
 
 .create-new-room img {
+    opacity: 0.4;
+}
+
+.countdown-timer {
+    position: absolute;
+    bottom: 3%;
+    left:0;
+    margin: auto;
+    width: 100%;
     opacity: 0.4;
 }

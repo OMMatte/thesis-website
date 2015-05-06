@@ -313,24 +313,25 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
 
         function generateRoomsAndRoomClickEvents(subject, callback) {
-            var $roomsSkeleton = $('<div>');
+            var $outerSkeleton = $('<div>');
+            var $innerSkeleton = $('<div>');
+            $outerSkeleton.append($innerSkeleton);
 
-            function generateBasicRoomContent(roomName, closing_time) {
+
+            function generateBasicRoomContent(roomName, roomId, closing_time) {
                 var imageName = subject + "_room.png";
-                var $content = $("<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>" +
+                var $content = $("<div class='col-xs-4 col-sm-4 col-md-3 col-lg-2'>" +
                 "<a href='#' class='thumbnail thumbnail-rooms'>" +
                 "<img src='" + elevutveckling.paths.images + imageName + "' alt='120x120'>" +
                 "<div class='caption'>" +
                 "<p class='text-center'><strong>" + roomName + "</strong></p>" +
-                "<div class='text-center' id='countdown_timer_" + roomName + "'> </div>" +
+                "<div class='text-center countdown-timer' id='countdown_timer_" + roomId + "'> </div>" +
                 "</div>" +
                 "</a>" +
                 "</div>");
 
                 // update the tag with id "countdown" every 1 second
                 function countdown(seconds) {
-                    // find the amount of "seconds" between now and target
-                    var current_date = new Date().getTime();
 
                     // do some time calculations
                     var days = parseInt(seconds / 86400);
@@ -366,7 +367,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                         if(seconds < 0) {
                             $content.hide();
                         }
-                        $content.find('#countdown_timer_' + roomName).html(countdown(seconds));
+                        $content.find('#countdown_timer_' + roomId).html(countdown(seconds));
                     }
 
                     countdownHandler();
@@ -387,7 +388,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
                 result.forEach(function (room) {
                     // Create the basic info for each room:
-                    var $roomHtml = generateBasicRoomContent(room.name, room.closing_time);
+                    var $roomHtml = generateBasicRoomContent(room.name, room.id, room.closing_time);
 
 
                     var $openedRoomPlacement = $('#opened_room_placement');
@@ -448,7 +449,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                         });
                     }
 
-                    $roomsSkeleton.append($roomHtml);
+                    $innerSkeleton.append($roomHtml);
                 });
 
 
@@ -512,11 +513,25 @@ extendNamespace(function (elevutveckling, $, undefined) {
                     return false; // return false to avoid page reload on submit
                 });
 
-                $roomsSkeleton.append($createNewRoom);
+                $innerSkeleton.append($createNewRoom);
 
-                callback($roomsSkeleton);
+                $(window).load(function() {
+                    console.log("TEST");
+                console.log($innerSkeleton.find(".thumbnail-rooms").height());
+                    var heights = $innerSkeleton.find(".thumbnail-rooms").find("a").map(function () {
+                            return $(this).height();
+                        }).get(),
+                        maxHeight = Math.max.apply(null, heights);
+                    console.log(heights);
+                    console.log(maxHeight);
+
+                    $innerSkeleton.find(".thumbnail-rooms").height(maxHeight);
+                });
+
+
+                callback($outerSkeleton);
             });
-            return $roomsSkeleton;
+            return $outerSkeleton;
         }
 
 
@@ -549,6 +564,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var checkAndIncreaseCallback = function () {
                     callbackCounter++;
                     if (callbackCounter === 2 && callback != undefined) {
+                        console.log("BAJSDSADASDS");
                         callback($outerSkeleton);
                     }
                 };

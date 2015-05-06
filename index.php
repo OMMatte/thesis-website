@@ -41,6 +41,7 @@ include(PATH_FULL_PHP . "body_bottom.php");
 
     $id.append(elevutveckling.generateSubjectImageButtons("chemistry", "/kemi"));
 
+
 </script>
 
 </body>
