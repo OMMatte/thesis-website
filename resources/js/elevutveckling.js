@@ -319,7 +319,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             $outerSkeleton.append($innerSkeleton);
 
 
-            function generateBasicRoomContent(roomName, roomId, closing_time) {
+            function generateBasicRoomContent(roomName, roomId, closing_time, locked) {
                 var imageName = subject + "_room.png";
                 var $content = $("<div class='col-xs-4 col-sm-4 col-md-3 col-lg-2'>" +
                 "<a href='#' class='thumbnail thumbnail-rooms'>" +
@@ -330,6 +330,10 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 "</div>" +
                 "</a>" +
                 "</div>");
+
+                if (locked != undefined && locked) {
+                    $content.find('img').after("<img class='locked_room' src='" + elevutveckling.paths.images + "locked_room.png" + "' alt='120x120'>");
+                }
 
                 // update the tag with id "countdown" every 1 second
                 function countdown(seconds) {
@@ -389,7 +393,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
                 result.forEach(function (room) {
                     // Create the basic info for each room:
-                    var $roomHtml = generateBasicRoomContent(room.name, room.id, room.closing_time);
+                    var $roomHtml = generateBasicRoomContent(room.name, room.id, room.closing_time, isTrue(room.locked));
 
 
                     var $openedRoomPlacement = $('#opened_room_placement');
@@ -458,7 +462,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var $createNewRoom = generateBasicRoomContent('Nytt Rum');
                 $createNewRoom.addClass('create-new-room');
                 $createNewRoom.find('p').addClass('text-primary');
-
 
 
                 var nameMin = elevutveckling.form.newRoom.name.min;

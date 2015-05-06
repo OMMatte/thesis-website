@@ -35,3 +35,12 @@
     width: 100%;
     opacity: 0.4;
 }
+
+img.locked_room {
+    position: absolute;
+    height: auto;
+    width: 20%;
+    bottom: 1%;
+
+    left: 0;
+}
