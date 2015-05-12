@@ -13,6 +13,7 @@ include(PATH_FULL_PHP . "body_top.php");
 <div class="container" id="top_container">
     <!-- Example row of columns -->
     <div class="row" id="image_row_1"></div>
+    <br>
     <div class="row" id="image_row_2"></div>
     <?php
     include(PATH_FULL_PHP . "footer.php");
@@ -31,31 +32,19 @@ include(PATH_FULL_PHP . "body_bottom.php");
 <script>
     var id = '#image_row_1';
 
-    elevutveckling.generateSubjectImageButtons("mathematics", function (htmlMath) {
-        $(id).append(htmlMath);
-    }, "/matematik");
+    $(id).append(elevutveckling.generateSubjectImageButtons("mathematics", "/matematik"));
 
-    elevutveckling.generateSubjectImageButtons("physics", function (htmlPhysics) {
-        $(id).append(htmlPhysics);
-    }, "/physics");
+    $(id).append(elevutveckling.generateSubjectImageButtons("physics", "/physics"));
 
-    elevutveckling.generateSubjectImageButtons("chemistry", function (htmlChemistry) {
-        $(id).append(htmlChemistry);
-    }, "/chemistry");
+    $(id).append(elevutveckling.generateSubjectImageButtons("chemistry", "/chemistry"));
 
     var id2 = '#image_row_2';
 
-    elevutveckling.generateSubjectImageButtons("rodakorset", function (htmlMath) {
-        $(id2).append(htmlMath);
-    }, "http://www.redcross.se/");
+    $(id2).append(elevutveckling.generateSubjectImageButtons("rodakorset", "http://www.redcross.se/"));
 
-    elevutveckling.generateSubjectImageButtons("human_rights", function (html) {
-        $(id2).append(html);
-    }, "http://www.manskligarattigheter.se/");
+    $(id2).append(elevutveckling.generateSubjectImageButtons("human_rights", "http://www.manskligarattigheter.se/"));
 
-    elevutveckling.generateSubjectImageButtons("freedom_of_speech", function (html) {
-        $(id2).append(html);
-    }, "http://www.riksdagen.se/sv/Sa-funkar-riksdagen/Demokrati/Grundlagarna/Yttrandefrihetsgrundlag/");
+    $(id2).append(elevutveckling.generateSubjectImageButtons("freedom_of_speech", "http://www.riksdagen.se/sv/Sa-funkar-riksdagen/Demokrati/Grundlagarna/Yttrandefrihetsgrundlag/"));
 </script>
 </body>
 </html>

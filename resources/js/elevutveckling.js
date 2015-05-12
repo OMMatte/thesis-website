@@ -576,7 +576,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 var checkAndIncreaseCallback = function () {
                     callbackCounter++;
                     if (callbackCounter === 2 && callback != undefined) {
-                        console.log("BAJSDSADASDS");
                         callback($outerSkeleton);
                     }
                 };
