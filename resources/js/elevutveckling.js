@@ -149,24 +149,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
             return $divAccordion;
         };
-        /**
-         * Basic async call for retrieving information from a json file and sending it to a function
-         * @param jsonPath The directory path to the json file
-         * @param callback The callback function. Must have a parameter for the json data.
-         * @param jsonName Optional param. If the json file contains named elements, then only the element matching the name is retrieved.
-         * @returns {*}
-         */
-        elevutveckling.retrieveJsonData = function (jsonPath, callback, jsonName) {
-            return $.getJSON(jsonPath).then(function (data) {
-                var returnJson;
-                if (jsonName === undefined) {
-                    returnJson = data;
-                } else {
-                    returnJson = data[jsonName];
-                }
-                callback(returnJson);
-            });
-        };
 
 //****************** HELPER FUNCTIONS ******************
 

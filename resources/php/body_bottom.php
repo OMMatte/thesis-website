@@ -5,9 +5,7 @@
 <script src="<?php echo PATH_FRAMEWORK_JS ?>jquery.md5.js"></script>
 
 <!-- Main javascript functions -->
-<script type="text/javascript" src="<?php echo PATH_JS ?>main.js"></script>
 <script type="text/javascript" src="<?php echo PATH_JS ?>elevutveckling.js"></script>
-<script type="text/javascript" src="<?php echo PATH_JS ?>navigator.js"></script>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -48,13 +46,3 @@
     } catch (e) {
     }
 </script>
-
-
-<script>
-    // Effects for the navigation bar
-    elevutveckling.header.navbarEffects();
-</script>
-
-<?php
-include(PATH_ROOT . "/constants_js.php");
-?>

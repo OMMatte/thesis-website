@@ -38,3 +38,8 @@
 
 <!-- jQuery -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="<?php echo PATH_JS ?>main.js"></script>
+<?php
+include(PATH_ROOT . "/constants_js.php");
+?>

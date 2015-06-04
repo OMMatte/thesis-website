@@ -1,0 +1,39 @@
+[
+  {
+    "type": "title",
+    "name": "Elevutveckling"
+  },
+  {
+    "type": "dropdown",
+    "name": "Ämnen ",
+    "items": [
+      {
+        "name": "Matematik",
+        "href": "/matematik"
+      },
+      {
+        "name": "Fysik",
+        "href": "/fysik"
+      },
+      {
+        "name": "Kemi",
+        "href": "/kemi"
+      }
+    ]
+  },
+  {
+    "type": "default",
+    "name": "Hjälp",
+    "href": "/hjalp"
+  },
+  {
+    "type": "default",
+    "name": "Om",
+    "href": "#"
+  },
+  {
+    "type": "default",
+    "name": "Kontakt",
+    "href": "#"
+  }
+]

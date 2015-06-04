@@ -1,11 +1,11 @@
 {
   "links": {
-    "title": "Intressanta länkar"
+    "name": "Intressanta länkar"
   },
   "virtual_rooms": {
-    "title": "Grupprum"
+    "name": "Grupprum"
   },
   "question_and_answers": {
-    "title": "Frågor & Svar"
+    "name": "Frågor & Svar"
   }
 }
