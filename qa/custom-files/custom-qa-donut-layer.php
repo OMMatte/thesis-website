@@ -102,6 +102,7 @@ class qa_html_theme extends qa_html_theme_ADDED_THIS
 //			$this->output('</footer> <!-- END footer -->', '');
     }
 
+
     /**
      * Removed title and search bar
      * Added search to navigation

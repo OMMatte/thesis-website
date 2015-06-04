@@ -9,6 +9,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
 
     header.navbarEffects = function () {
 
+
         $("#body_hjalp a:contains('Hjälp')").parent().addClass('active');
         $("#body_about a:contains('Om')").parent().addClass('active');
         $("#body_contact a:contains('Kontakt')").parent().addClass('active');

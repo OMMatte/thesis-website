@@ -26,6 +26,29 @@ class qa_html_theme_ADDED_THIS extends qa_html_theme_base {
 			$this->output('</head>');
 		}
 
+        function head_script() // change style of WYSIWYG editor to match theme better
+        {
+            qa_html_theme_base::head_script();
+            $js_paths = array(
+                'bootstrap' => 'js/bootstrap.min.js',
+                'donut' => 'js/donut.js',
+            );
+            if ($this->template == 'admin') {
+                $js_paths['admin'] = 'js/admin.js';
+            }
+
+            if (DONUT_ACTIVATE_PROD_MODE) {
+                $cdn_js_paths = array(
+                    'bootstrap' => donut_opt::BS_JS_CDN,
+                );
+                unset($js_paths['bootstrap']);
+                $this->donut_resources($cdn_js_paths, 'js', TRUE);
+            }
+
+            $this->donut_resources($js_paths, 'js');
+
+        }
+
 
 
 		function head_css()

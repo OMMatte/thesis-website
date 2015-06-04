@@ -7,7 +7,7 @@
 </head>
 <body id="body_chemistry">
 <?php
-include(PATH_FULL_PHP . "body_top.php");
+include(PATH_FULL_PHP . "navigator.php");
 ?>
 
 <div id="header_placement"></div>

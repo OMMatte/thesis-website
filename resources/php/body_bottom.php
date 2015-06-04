@@ -7,7 +7,7 @@
 <!-- Main javascript functions -->
 <script type="text/javascript" src="<?php echo PATH_JS ?>main.js"></script>
 <script type="text/javascript" src="<?php echo PATH_JS ?>elevutveckling.js"></script>
-<script type="text/javascript" src="<?php echo PATH_JS ?>header.js"></script>
+<script type="text/javascript" src="<?php echo PATH_JS ?>navigator.js"></script>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

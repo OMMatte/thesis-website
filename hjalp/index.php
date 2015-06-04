@@ -7,7 +7,7 @@
 </head>
 <body id="body_hjalp">
 <?php
-include(PATH_FULL_PHP . "body_top.php");
+include(PATH_FULL_PHP . "navigator.php");
 ?>
 
 

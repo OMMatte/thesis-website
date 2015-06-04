@@ -7,7 +7,7 @@
 </head>
 <body id="body_stadsmissionen">
 <?php
-include(PATH_FULL_PHP . "body_top.php");
+include(PATH_FULL_PHP . "navigator.php");
 ?>
 
 <div class="container" id="top_container">
