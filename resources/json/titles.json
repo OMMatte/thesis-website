@@ -1,30 +1,30 @@
 {
   "home": {
-    "name": "Elevutveckling",
+    "title": "Elevutveckling",
     "description": "Välkommen till Elevutveckling. Tanken med hemsidan är att hjälpa elever som studerar årskurs X - X med sina studier."
   },
   "rodakorset": {
-    "name": "Röda korset",
+    "title": "Röda korset",
     "description": "Välkommen till röda korsets elevutveckling. Via denna sida kan man få hjälp med sina studier för årskurs X - X. Ni kan också få information om hur vi arbetar på röda korset och hur ni kan hjälpa till."
   },
   "stadsmissionen": {
-    "name": "Stadsmissionen",
+    "title": "Stadsmissionen",
     "description": "Välkommen till Stadsmissionens elevutveckling. Via denna sida kan man få hjälp med sina studier för årskurs X - X. Ni kan också få information om hur vi arbetar på Stadsmissionen och hur ni kan hjälpa till."
   },
   "hjalp": {
-    "name": "Hjälp",
+    "title": "Hjälp",
     "description": "Här hittar du lite information om hur sidan fungerar."
   },
   "mathematics": {
-    "name": "Matematik",
+    "title": "Matematik",
     "description": ""
   },
   "chemistry": {
-    "name": "Kemi",
+    "title": "Kemi",
     "description": ""
   },
   "physics": {
-    "name": "Fysik",
+    "title": "Fysik",
     "description": ""
   }
 }
