@@ -56,5 +56,5 @@
 </script>
 
 <?php
-include(PATH_ROOT . "/global_variables_js.php");
+include(PATH_ROOT . "/constants_js.php");
 ?>

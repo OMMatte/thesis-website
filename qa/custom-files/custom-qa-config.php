@@ -31,7 +31,7 @@
 	prepend the hostname with 'p:'.
 */
 
-include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/constants.php");
 
 define('QA_MYSQL_HOSTNAME', MYSQL_HOSTNAME);
 define('QA_MYSQL_USERNAME', MYSQL_USERNAME);

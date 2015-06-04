@@ -150,16 +150,16 @@ extendNamespace(function (elevutveckling, $, undefined) {
             return $divAccordion;
         };
         /**
-         * Basic call for retrieving information from a json file and sending it to a function
-         * @param jsonPath The path to the json file
-         * @param callback The callback function. Must have a parameter the json data.
-         * @param jsonName Optional param. If the json file contains named elements, then only the element matching the given name.
+         * Basic async call for retrieving information from a json file and sending it to a function
+         * @param jsonPath The directory path to the json file
+         * @param callback The callback function. Must have a parameter for the json data.
+         * @param jsonName Optional param. If the json file contains named elements, then only the element matching the name is retrieved.
          * @returns {*}
          */
         elevutveckling.retrieveJsonData = function (jsonPath, callback, jsonName) {
             return $.getJSON(jsonPath).then(function (data) {
                 var returnJson;
-                if (jsonName == undefined) {
+                if (jsonName === undefined) {
                     returnJson = data;
                 } else {
                     returnJson = data[jsonName];
@@ -391,6 +391,7 @@ extendNamespace(function (elevutveckling, $, undefined) {
             }
 
             $.getJSON(elevutveckling.paths.server + "get_rooms_list.php", {subject: subject}, function (result) {
+                console.log(result);
                 result.forEach(function (room) {
                     // Create the basic info for each room:
                     var $roomHtml = generateBasicRoomContent(room.name, room.id, room.closing_time, isTrue(room.locked));
@@ -528,7 +529,6 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 $innerSkeleton.append($createNewRoom);
 
                 $(window).load(function () {
-                    console.log("TEST");
                     console.log($innerSkeleton.find(".thumbnail-rooms").height());
                     var heights = $innerSkeleton.find(".thumbnail-rooms").find("a").map(function () {
                             return $(this).height();
@@ -596,6 +596,32 @@ extendNamespace(function (elevutveckling, $, undefined) {
                 {
                     var $q2aIFrame = $('<iframe id="iframe_q2a" width="100%" height="100%" scrolling="no" frameborder="0">');
                     $q2aIFrame.attr('src', "http://" + location.hostname + "/" + elevutveckling.paths.qa + "/" + subject.sv);
+
+
+                    $q2aIFrame.on("load", function () {
+                        function changeParentIframe() {
+                            var q2aDoc = document.getElementById("iframe_q2a").contentDocument;
+                            var height = Math.min(q2aDoc.body.scrollHeight, q2aDoc.documentElement.scrollHeight); // Works different on different browsers. This works at least for firefox and chrome
+                            document.getElementById('iframe_q2a').style.height = Math.max(height, 0) + "px";
+                        }
+
+                        changeParentIframe();
+                        /**
+                         * Special observer on DOM events.
+                         * MutationObserver for FireFox, WebKitMutationObserver for chrome.
+                         * Watches over changes on the DOM given a few parameters
+                         * @type {MutationObserver|*}
+                         */
+                        MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+                        new MutationObserver(function (mutations, observer) {
+                            changeParentIframe();
+                        }).observe($q2aIFrame[0].contentDocument, { //Only watch on body element
+                                subtree: true, // Watch all sub-elements in the body
+                                attributes: true // Watch all type of attribute changes
+                                //...
+                            });
+                    });
+
 
                     // Set the question2answer with with the heading
                     $q2aPlacement.append(elevutveckling.generatePanelWithHeading(q2aTitle, $q2aIFrame));

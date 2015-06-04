@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <?php
-    include($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
+    include($_SERVER['DOCUMENT_ROOT'] . "/constants.php");
     include(PATH_FULL_PHP . "head.php");
     ?>
 </head>

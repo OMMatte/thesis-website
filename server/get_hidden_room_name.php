@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . "/global_variables.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/constants.php");
 include_once(PATH_FULL_SERVER . 'open_connection.php');
 
 $id = $_POST['id'];
